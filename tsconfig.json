@@ -1,16 +1,24 @@
 {
     "compilerOptions": {
-        //Route where ubicate the build
+        // Route where the build output will be located
         "outDir": "./dist",
-        //Route where root files it's
+        // Route where the root source files are located
         "rootDir": "./src",
+        // The ES version that will be used in the project
         "lib": ["ESNext"],
+        // Target JavaScript version for compiled code
         "target": "ESNext",
+        // Module resolution strategy for Node.js
         "moduleResolution": "nodenext",
+        // Module system to be used
         "module": "nodenext",
+        // Enables strict type-checking options
         "strict": true,
+        // Enables source map generation for debugging
         "sourceMap": true,
+        // Allows interoperability between CommonJS and ES modules
         "esModuleInterop": true,
-        "declaration": true,
+        // Generates type declaration files
+        "declaration": true
     }
 }
