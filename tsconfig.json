@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        //Route where ubicate the build
+        "outDir": "./dist",
+        //Route where root files it's
+        "rootDir": "./src",
+        "lib": ["ESNext"],
+        "target": "ESNext",
+        "moduleResolution": "nodenext",
+        "module": "nodenext",
+        "strict": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "declaration": true,
+    }
+}
