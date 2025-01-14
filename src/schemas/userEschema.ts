@@ -28,4 +28,9 @@ export const SignupEschemaResponse = z.object({
     body: SignupEschema
 })
 
+export const SignupEschemaBadResponse = z.object({
+    status: z.nativeEnum(StatusCode),
+    body: SignupEschema
+})
+
 export const SignupEschemaRequest = SignupEschema
