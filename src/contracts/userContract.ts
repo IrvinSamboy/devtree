@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupEschemaResponse, SignupEschemaRequest, StatusCode, SignupEschemaBadResponse  } from '../schemas/userEschema';
+import { SignupEschemaResponse, SignupEschemaRequest, SignupEschemaBadResponse  } from '../schemas/userEschema';
 
 const c = initContract();
 
@@ -9,9 +9,9 @@ export const userContract = c.router({
         path: '/signup/',
         body: SignupEschemaRequest,
         responses: {
-            [StatusCode.OK]: SignupEschemaResponse,
-            [StatusCode.BadRequest]: SignupEschemaBadResponse,
-            [StatusCode.InternalServerError]: SignupEschemaBadResponse
+            200: SignupEschemaResponse,
+            400: SignupEschemaBadResponse,
+            500: SignupEschemaBadResponse
         },
         summary: 'user registration'
     }
