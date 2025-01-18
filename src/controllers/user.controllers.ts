@@ -1,17 +1,21 @@
 import { userModel } from "../models/User";
 import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse  } from '../schemas/userEschema';
+import z from "zod";
 
-export const signup = async ({body} : {body : typeof SignupEschemaRequest._type}) : Promise<typeof SignupEschemaResponse._type | typeof SignupEschemaBadResponse._type> => {
+type TSignupEschemaRequest = z.infer<typeof SignupEschemaRequest>
+type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
+type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>
+
+export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
         const { name, email, password } = body
 
-        const newUser  = await userModel.create({name, email, password})
+        const newUser : TSignupEschemaRequest = await userModel.create({name, email, password})
         
         return {
             status: 200,
             body: newUser
         }
-
 
     }
     catch (e) {
