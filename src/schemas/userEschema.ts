@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
 
-export const errorMessage = z.object({
+export const Message = z.object({
     message: z.string()
 })
 
@@ -18,7 +18,7 @@ export const SignupEschemaResponse = z.object({
 
 export const SignupEschemaBadResponse = z.object({
     status: BadStatusSchema,
-    body: errorMessage
+    body: Message
 })
 
 export const SignupEschemaRequest = SignupEschema
@@ -29,10 +29,10 @@ export const SigninSchemaRequest = SigninSchema
 
 export const SigninEschemaResponse = z.object({
     status: PositiveStatusSchema,
-    body: SigninSchema
+    body: Message
 })
 
 export const SigninEschemaBadResponse = z.object({
     status: BadStatusSchema,
-    body: errorMessage
+    body: Message
 })

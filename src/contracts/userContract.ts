@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupEschemaRequest, SigninSchemaRequest, errorMessage  } from '../schemas/userEschema';
+import { SignupEschemaRequest, SigninSchemaRequest, Message  } from '../schemas/userEschema';
 
 const c = initContract();
 
@@ -10,7 +10,7 @@ export const userContract = c.router({
         body: SignupEschemaRequest,
         responses: {
             200: SignupEschemaRequest,
-            500: errorMessage
+            500: Message
         },
         summary: 'user registration'
     },
@@ -20,10 +20,10 @@ export const userContract = c.router({
         path: '/signin',
         body: SigninSchemaRequest,
         responses : {
-            200: SigninSchemaRequest,
-            401: errorMessage,
-            404: errorMessage,
-            500: errorMessage
+            200: Message,
+            401: Message,
+            404: Message,
+            500: Message
         },
         summary: 'user login'
     }
