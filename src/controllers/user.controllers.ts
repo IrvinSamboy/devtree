@@ -46,7 +46,7 @@ export const signin = async ({body} : {body: TSigninSchemaRequest}) : Promise<TS
             body: {message: "user not found"}
         }
 
-        if(userExits.password === password) {
+        if(bcrypt.compareSync(password, userExits.password)) {
             return {
                 status: 200,
                 body: userExits
