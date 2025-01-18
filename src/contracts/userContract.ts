@@ -21,6 +21,8 @@ export const userContract = c.router({
         body: SigninSchemaRequest,
         responses : {
             200: SigninSchemaRequest,
+            401: errorMessage,
+            404: errorMessage,
             500: errorMessage
         },
         summary: 'user login'
