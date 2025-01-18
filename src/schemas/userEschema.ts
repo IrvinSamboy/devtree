@@ -5,7 +5,7 @@ export const Message = z.object({
     message: z.string()
 })
 
-const SignupEschema = z.object({
+export const ZUserEschema = z.object({
     name: z.string(),
     email: z.string(),
     password: z.string()
@@ -13,7 +13,7 @@ const SignupEschema = z.object({
 
 export const SignupEschemaResponse = z.object({
     status: PositiveStatusSchema,
-    body: SignupEschema
+    body: ZUserEschema
 })
 
 export const SignupEschemaBadResponse = z.object({
@@ -21,9 +21,9 @@ export const SignupEschemaBadResponse = z.object({
     body: Message
 })
 
-export const SignupEschemaRequest = SignupEschema
+export const SignupEschemaRequest = ZUserEschema
 
-const SigninSchema = SignupEschema.omit({name: true})
+const SigninSchema = ZUserEschema.omit({name: true})
 
 export const SigninSchemaRequest = SigninSchema
 

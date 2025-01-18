@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import { ZUserEschema } from "../schemas/userEschema";
+import z from "zod";
+
+type TUser = z.infer<typeof ZUserEschema>
 
 const userSchema = new mongoose.Schema({
     name : {
@@ -19,4 +23,4 @@ const userSchema = new mongoose.Schema({
     }, 
 }, {timestamps: true})
 
-export const userModel = mongoose.model("userModel", userSchema)
+export const userModel = mongoose.model<TUser>("userModel", userSchema)
