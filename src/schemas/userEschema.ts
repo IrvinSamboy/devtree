@@ -1,21 +1,5 @@
 import { z } from 'zod'
-
-export enum StatusCode {
-    OK = 200,
-    Created = 201,
-    NoContent = 204,
-    BadRequest = 400,
-    Unauthorized = 401,
-    Forbidden = 403,
-    NotFound = 404,
-    MethodNotAllowed = 405,
-    InternalServerError = 500,
-    NotImplemented = 501,
-    BadGateway = 502,
-    ServiceUnavailable = 503,
-    GatewayTimeout = 504
-}
-
+import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
 
 export const SignupEschema = z.object({
     username: z.string(),
@@ -24,13 +8,13 @@ export const SignupEschema = z.object({
 })
 
 export const SignupEschemaResponse = z.object({
-    status: z.nativeEnum(StatusCode),
+    status: PositiveStatusSchema,
     body: SignupEschema
 })
 
 export const SignupEschemaBadResponse = z.object({
-    status: z.nativeEnum(StatusCode),
-    body: SignupEschema
+    status: BadStatusSchema,
+    body: z.object({message: z.string()})
 })
 
 export const SignupEschemaRequest = SignupEschema

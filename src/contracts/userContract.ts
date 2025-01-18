@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
-import { SignupEschemaResponse, SignupEschemaRequest, SignupEschemaBadResponse  } from '../schemas/userEschema';
-
+import { SignupEschemaRequest  } from '../schemas/userEschema';
+import {z } from 'zod'
 const c = initContract();
 
 export const userContract = c.router({
@@ -9,9 +9,8 @@ export const userContract = c.router({
         path: '/signup/',
         body: SignupEschemaRequest,
         responses: {
-            200: SignupEschemaResponse,
-            400: SignupEschemaBadResponse,
-            500: SignupEschemaBadResponse
+            200: SignupEschemaRequest,
+            500: z.object({message: z.string()})
         },
         summary: 'user registration'
     }

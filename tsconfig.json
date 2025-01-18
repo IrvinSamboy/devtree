@@ -19,6 +19,6 @@
         // Allows interoperability between CommonJS and ES modules
         "esModuleInterop": true,
         // Generates type declaration files
-        "declaration": true
+        "declaration": false
     }
 }

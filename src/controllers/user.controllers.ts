@@ -1,7 +1,7 @@
 import { userModel } from "../models/User";
-import { SignupEschemaRequest  } from '../schemas/userEschema';
+import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse  } from '../schemas/userEschema';
 
-export const signup = async ({body} : {body : typeof SignupEschemaRequest._type}) => {
+export const signup = async ({body} : {body : typeof SignupEschemaRequest._type}) : Promise<typeof SignupEschemaResponse._type | typeof SignupEschemaBadResponse._type> => {
     try{
         const { username, email, password } = body
 
@@ -15,9 +15,12 @@ export const signup = async ({body} : {body : typeof SignupEschemaRequest._type}
 
     }
     catch (e) {
+
+        console.log(e)
+
         return {
             status: 500,
-            body: {message : e}
+            body: {message : "hi"}
         }
     }
 }
