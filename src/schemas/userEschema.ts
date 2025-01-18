@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
 
-const errorMessage = z.object({
+export const errorMessage = z.object({
     message: z.string()
 })
 
