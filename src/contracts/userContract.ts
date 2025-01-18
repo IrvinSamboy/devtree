@@ -1,6 +1,7 @@
 import { initContract } from '@ts-rest/core';
 import { SignupEschemaRequest  } from '../schemas/userEschema';
 import {z } from 'zod'
+
 const c = initContract();
 
 export const userContract = c.router({

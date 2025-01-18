@@ -3,13 +3,13 @@ import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse  
 
 export const signup = async ({body} : {body : typeof SignupEschemaRequest._type}) : Promise<typeof SignupEschemaResponse._type | typeof SignupEschemaBadResponse._type> => {
     try{
-        const { username, email, password } = body
+        const { name, email, password } = body
 
-        const newUser = await userModel.create({username, email, password})
-        console.log(newUser)
+        const newUser  = await userModel.create({name, email, password})
+        
         return {
             status: 200,
-            body: body
+            body: newUser
         }
 
 

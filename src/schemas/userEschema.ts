@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
 
 export const SignupEschema = z.object({
-    username: z.string(),
+    name: z.string(),
     email: z.string(),
     password: z.string()
 })
