@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
 import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse, SigninEschemaResponse, SigninEschemaBadResponse, SigninSchemaRequest  } from '../schemas/userEschema';
 import z from "zod";
@@ -13,8 +14,9 @@ type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
 export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
         const { name, email, password } = body
-
-        const newUser : TSignupEschemaRequest = await userModel.create({name, email, password})
+        const salt = bcrypt.genSaltSync(10)
+        const passwordEncrypted = bcrypt.hashSync(password, salt)
+        const newUser : TSignupEschemaRequest = await userModel.create({name, email, password: passwordEncrypted})
         
         return {
             status: 200,
