@@ -19,12 +19,12 @@ export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise
 
     }
     catch (e) {
-
-        console.log(e)
+        
+        const errorMessage = (e as Error).message
 
         return {
             status: 500,
-            body: {message : "hi"}
+            body: {message : errorMessage}
         }
     }
 }
