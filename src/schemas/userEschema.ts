@@ -6,6 +6,7 @@ export const Message = z.object({
 })
 
 export const ZUserEschema = z.object({
+    userName: z.string(),
     name: z.string(),
     email: z.string(),
     password: z.string()
