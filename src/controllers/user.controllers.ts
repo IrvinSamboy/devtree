@@ -14,6 +14,14 @@ type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
 export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
         const { name, email, password } = body
+
+        const userExits = await userModel.findOne({email})
+
+        if(userExits) return {
+            status: 400,
+            body: {message: "Another user registered with this email"}
+        }
+
         const salt = bcrypt.genSaltSync(10)
         const passwordEncrypted = bcrypt.hashSync(password, salt)
         const newUser : TSignupEschemaRequest = await userModel.create({name, email, password: passwordEncrypted})
