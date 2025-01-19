@@ -35,8 +35,9 @@ export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise
 
         const salt = bcrypt.genSaltSync(10)
         const passwordEncrypted = bcrypt.hashSync(password, salt)
-        const newUser : TSignupEschemaRequest = await userModel.create({userName : userNameFormated, name, email, password: passwordEncrypted})
-        
+        const newUser = new userModel({userName : userNameFormated, name, email, password: passwordEncrypted})
+        await newUser.save()
+
         return {
             status: 200,
             body: newUser
