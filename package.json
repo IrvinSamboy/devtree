@@ -4,7 +4,7 @@
   "description": "DevTree its a clone of linktree for developers",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.ts"
+    "dev": "nodemon ./server/src/index.ts"
   },
   "keywords": [],
   "author": "",
