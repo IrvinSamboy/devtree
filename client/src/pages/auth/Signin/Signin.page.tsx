@@ -1,4 +1,4 @@
-import { Code2 } from "lucide-react"
+import Logo from "../../../components/utils/Logo"
 
 export default function Signin() {
   return (
@@ -6,9 +6,8 @@ export default function Signin() {
 
       <div className="flex justify-center flex-col size-full items-center space-y-4">
         <div className="w-[70%] flex flex-col items-center justify-center bg-white p-8 rounded-xl shadow-xl">
-          <header className="w-full flex gap-3 text-mid-purple py-3">
-            <Code2 />
-            <p className="font-semibold text-xl">DEVTREE</p>
+          <header className="w-full py-3">
+            <Logo />
           </header>
 
           <div className='space-y-1 w-full mb-4'>
