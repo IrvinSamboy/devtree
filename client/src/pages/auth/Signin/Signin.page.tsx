@@ -1,33 +1,42 @@
+import { Code2 } from "lucide-react"
 
 export default function Signin() {
   return (
     <section className="grid grid-cols-2 size-full">
 
-      <div className="size-full flex flex-col h-full items-center">
-        <header className="w-full p-9">
-          <p className="font-light text-xl">DEV<span className="font-semibold text-mid-purple">TREE</span></p>
-        </header>
-        <div className='flex justify-center flex-col size-full items-center space-y-4'>
+      <div className="flex justify-center flex-col size-full items-center space-y-4">
+        <div className="w-[70%] flex flex-col items-center justify-center bg-white p-8 rounded-xl shadow-xl">
+          <header className="w-full flex gap-3 text-mid-purple py-3">
+            <Code2 />
+            <p className="font-semibold text-xl">DEVTREE</p>
+          </header>
 
-          <div className='text-center space-y-2'>
-            <h1 className='text-5xl font-semibold'>Welcome back!</h1>
-            <p className='text-gray-600 text-xl font-light'>Log in your DevTree</p>
+          <div className='space-y-1 w-full mb-4'>
+            <h1 className='text-2xl font-semibold'>Welcome back!</h1>
+            <p className='text-gray-600 text-md font-light'>Sign in to your DevTree account to continue</p>
           </div>
 
-          <form action="" className='w-[85%] p-4 space-y-6'>
-            <input
-              className='bg-gray-200 w-full p-2 rounded-xl outline-none border-2 border-transparent focus:border-mid-purple'
-              type="text"
-              placeholder='E-mail'
-            />
-
-            <input
-              className='bg-gray-200 w-full p-2 rounded-xl outline-none border-2 border-transparent focus:border-mid-purple'
-              type="text"
-              placeholder='password'
-            />
-
-            <button className='w-full text-center p-4 bg-mid-purple font-bold text-white rounded-full'>Sign-in</button>
+          <form action="" className='w-full space-y-5'>
+            <div className="flex flex-col space-y-1">
+              <label htmlFor="">Email</label>
+              <input
+                className='bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black'
+                type="text"
+                placeholder='E-mail'
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <div className="flex justify-between">
+              <label htmlFor="">Password</label>
+              <p className="font-light text-mid-purple">Forgot password?</p>
+              </div>
+              <input
+                className='bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black'
+                type="text"
+                placeholder='password'
+              />
+            </div>
+            <button className='w-full text-center p-4 bg-mid-purple font-bold text-white rounded-lg'>Sign-in</button>
 
           </form>
         </div>
