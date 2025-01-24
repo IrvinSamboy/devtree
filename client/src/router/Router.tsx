@@ -13,7 +13,7 @@ export default function Router() {
                   path="/auth/"
               >
                 <Route 
-                  path="/signin"
+                  path="/auth/signin"
                   element={<Signin />}
                 />
               </Route>
