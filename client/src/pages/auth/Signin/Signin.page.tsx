@@ -1,5 +1,6 @@
 import Logo from "../../../components/utils/Logo"
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import Input from "../../../components/ui/Input"
 
 interface InputsI {
   email: string,
@@ -8,7 +9,7 @@ interface InputsI {
 
 export default function Signin() {
 
-  const { register, handleSubmit, formState: {errors} } = useForm<InputsI>()
+  const { handleSubmit, formState: {errors}, control } = useForm<InputsI>()
   
   const onSubmit = (data : InputsI) => console.log(data)
 
@@ -28,37 +29,49 @@ export default function Signin() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className='w-full space-y-5'>
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="">Email</label>
-              <input
-                className={`bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black ${errors.email&& 'border-red-500'}`}
-                type="text"
-                placeholder='E-mail'
-                { ...register('email', {
+            <Controller
+              name="email"
+              control={control}
+              rules={
+                { 
                   required : 'E-mail addres is required',
                   pattern: {
                     value: /\S+@\S+\.\S+/,
                     message: "Invalid E-mail",
                   }
-                })}
-              />
-              {errors.email&& <p className="text-red-500">{errors.email.message}</p>}
-            </div>
-            <div className="flex flex-col space-y-1">
-              <div className="flex justify-between">
-              <label htmlFor="">Password</label>
-              <p className="font-light text-mid-purple cursor-pointer">Forgot password?</p>
-              </div>
-              <input
-                className={`bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black ${errors.email&& 'border-red-500'}`}
-                type="text"
-                placeholder='password'
-                {...register('password',{
-                  required: 'Password is required'
-                })}
-              />
-              {errors.email&& <p className="text-red-500">{errors.email.message}</p>}
-            </div>
+                }
+              }
+              render={({field}) => 
+                <Input 
+                  type="text"
+                  placeHolder="E-mail"
+                  onChange={field.onChange}
+                  value={field.value}
+                  errorMessage={errors.email && errors.email.message}
+                  label="E-mail"
+                />
+              }
+            />
+            <Controller
+              name="password"
+              control={control}
+              rules={
+                { 
+                  required : 'Password is required'
+                }
+              }
+              render={({field}) => 
+                <Input 
+                  type="text"
+                  placeHolder="Password"
+                  onChange={field.onChange}
+                  value={field.value}
+                  errorMessage={errors.email && errors.email.message}
+                  label="Password"
+                />
+              }
+            />
+            
             <button className='w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer'>Sign-in</button>
             <p className="text-gray-600">Don't have an account? <span className="text-black font-semibold cursor-pointer">Create account</span></p>
           </form>
