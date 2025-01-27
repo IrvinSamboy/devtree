@@ -2,7 +2,7 @@ import { useForm, Controller } from 'react-hook-form'
 import Input from "../../../components/ui/Input"
 import FormAuth from "../../../components/auth/FormAuth"
 import { InputsSigninT } from '../../../interfaces/User.interface'
-
+import { Link } from 'react-router-dom'
 export default function Signin() {
 
   const { handleSubmit, formState: { errors }, control } = useForm<InputsSigninT>()
@@ -59,7 +59,7 @@ export default function Signin() {
         />
 
         <button className='w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer'>Sign-in</button>
-        <p className="text-gray-600">Don't have an account? <span className="text-black font-semibold cursor-pointer">Create account</span></p>
+        <p className="text-gray-600">Don't have an account? <Link to={'/auth/signup'} className="text-black font-semibold cursor-pointer">Create account</Link></p>
       </form>
     </FormAuth>
 
