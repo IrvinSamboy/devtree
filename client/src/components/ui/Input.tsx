@@ -14,6 +14,7 @@ export default function Input({
   styles = "",
   placeHolder = "",
   label = "",
+  type = "text",
   onChange = () => {},
   value
 }: inputPropsI) {
@@ -25,7 +26,7 @@ export default function Input({
             `bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black ${styles}
             ${errorMessage && "border-red-500"}`
         }
-        type="text"
+        type={type}
         placeholder={placeHolder}
         onChange={onChange}
         value={value}

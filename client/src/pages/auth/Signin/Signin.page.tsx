@@ -1,17 +1,13 @@
 import { useForm, Controller } from 'react-hook-form'
 import Input from "../../../components/ui/Input"
 import FormAuth from "../../../components/auth/FormAuth"
-interface InputsI {
-  email: string,
-  password: string
-}
+import { InputsSigninT } from '../../../interfaces/User.interface'
 
 export default function Signin() {
 
-  const { handleSubmit, formState: { errors }, control } = useForm<InputsI>()
+  const { handleSubmit, formState: { errors }, control } = useForm<InputsSigninT>()
 
-  const onSubmit = (data: InputsI) => console.log(data)
-
+  const onSubmit = (data: InputsSigninT) => console.log(data)
 
   return (
     <FormAuth
@@ -52,7 +48,7 @@ export default function Signin() {
           }
           render={({ field }) =>
             <Input
-              type="text"
+              type="password"
               placeHolder="Password"
               onChange={field.onChange}
               value={field.value}
