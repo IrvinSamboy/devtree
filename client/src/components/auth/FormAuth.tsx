@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import Logo from "../utils/Logo"
 
-export default function FormAuth({children} : {children : ReactNode}) {
+export default function FormAuth({children, titleForm, subTitleForm} : {children : ReactNode, titleForm: string, subTitleForm: string}) {
   return (
     <section className="grid grid-cols-2 size-full">
 
@@ -12,8 +12,8 @@ export default function FormAuth({children} : {children : ReactNode}) {
           </header>
 
           <div className='space-y-1 w-full mb-4'>
-            <h1 className='text-2xl font-semibold'>Welcome back!</h1>
-            <p className='text-gray-600 text-md font-light'>Sign in to your DevTree account to continue</p>
+            <h1 className='text-2xl font-semibold'>{titleForm}</h1>
+            <p className='text-gray-600 text-md font-light'>{subTitleForm}</p>
           </div>
 
           {children}

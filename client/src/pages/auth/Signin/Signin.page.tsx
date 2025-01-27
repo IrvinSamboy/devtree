@@ -14,7 +14,10 @@ export default function Signin() {
 
 
   return (
-    <FormAuth>
+    <FormAuth
+      titleForm={'Welcome back!'}
+      subTitleForm={'Sign in to your DevTree account to continue'}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className='w-full space-y-5'>
         <Controller
           name="email"

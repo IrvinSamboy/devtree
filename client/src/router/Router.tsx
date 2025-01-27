@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Signin from "../pages/auth/Signin/Signin.page"
 import RootLayout from "../components/layout/RootLayout"
+import Signup from "../pages/auth/Signup/Signup.page"
 
 export default function Router() {
   return (
@@ -15,6 +16,10 @@ export default function Router() {
                 <Route 
                   path="/auth/signin"
                   element={<Signin />}
+                />
+                <Route 
+                  path="/auth/signUp"
+                  element={<Signup />}
                 />
               </Route>
             </Route>
