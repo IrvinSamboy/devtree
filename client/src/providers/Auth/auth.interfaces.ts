@@ -1,6 +1,10 @@
-export interface signInRequestI {
-    email: string;
-    password: string;
+import { UserI } from "../../interfaces/User.interface";
+
+export type signInRequestT = Omit<UserI, "username" | "name">
+
+export interface ErrorMessage {
+    status: number;
+    message: string;
 }
 
 export interface signInResponseI {
@@ -8,14 +12,7 @@ export interface signInResponseI {
     message: string;
 }
 
-export interface signInResponseErrI {
-    status: number;
-    message: string;
-}
 
-export interface signUpRequestI {
-    email: string;
-    username: string;
-    name: string;
-    password: string;
-}
+export type signUpRequestT = UserI
+
+export type signUpResponseT = UserI
