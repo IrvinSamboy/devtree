@@ -1,5 +1,5 @@
 import { apiDevTreeEndPoints } from "../endPoints";
-import { apiDevTree } from "../apliClient";
+import { apiDevTree } from "../apiClient";
 import { useMutation } from 'react-query'
 import { signInRequestT, signInResponseI, ErrorMessage, signUpRequestT, signUpResponseT } from "./auth.interfaces";
 
