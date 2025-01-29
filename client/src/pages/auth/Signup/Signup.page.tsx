@@ -2,18 +2,31 @@ import Input from "../../../components/ui/Input"
 import FormAuth from "../../../components/auth/FormAuth"
 import { useForm, Controller } from 'react-hook-form'
 import { InputsSignupT } from "../../../interfaces/User.interface"
+import { useSignUp } from "../../../providers/Auth"
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Signup() {
 
     const { handleSubmit, formState: { errors }, control } = useForm<InputsSignupT>()
+    const {mutate: signUp, isLoading} = useSignUp()
 
-    const onSubmit = (data: InputsSignupT) => console.log(data)
+    const onSubmit = (data: InputsSignupT) => {
+        signUp(data, {
+            onSuccess: () => {
+                toast("User register correctly")
+            },
+            onError: (response) => {
+                toast(response.message)
+            }
+        })
+    }
 
     return (
         <FormAuth
             titleForm={'Join DevTree!'}
             subTitleForm={'Sign up for free!'}
         >
+            <ToastContainer aria-label={undefined} />
             <form className='w-full space-y-5' onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                     name="username"
@@ -58,7 +71,7 @@ export default function Signup() {
                     control={control}
                     rules={
                         {
-                            required: 'E-mail addres is required',
+                            required: 'E-mail address is required',
                             pattern: {
                                 value: /\S+@\S+\.\S+/,
                                 message: "Invalid E-mail",
@@ -96,7 +109,11 @@ export default function Signup() {
                     }
                 />
 
-                <button className='w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer'>Sign-up</button>
+                <button
+                    disabled={isLoading} 
+                    className='w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer'>
+                    {isLoading? "Loading..." : "Sign-up"}
+                </button>
             </form>
         </FormAuth>
     )
