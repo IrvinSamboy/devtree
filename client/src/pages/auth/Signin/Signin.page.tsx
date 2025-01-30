@@ -5,7 +5,14 @@ import { InputsSigninT } from '../../../interfaces/User.interface'
 import { Link } from 'react-router-dom'
 export default function Signin() {
 
-  const { handleSubmit, formState: { errors }, control } = useForm<InputsSigninT>()
+  const { handleSubmit, formState: { errors }, control } = useForm<InputsSigninT>(
+    {
+        defaultValues : {
+            email: '',
+            password: ''
+        }
+    }
+)
 
   const onSubmit = (data: InputsSigninT) => console.log(data)
 

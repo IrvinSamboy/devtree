@@ -7,7 +7,16 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function Signup() {
 
-    const { handleSubmit, formState: { errors }, control } = useForm<InputsSignupT>()
+    const { handleSubmit, formState: { errors }, control } = useForm<InputsSignupT>(
+        {
+            defaultValues : {
+                username: '',
+                name: '',
+                email: '',
+                password: ''
+            }
+        }
+    )
     const {mutate: signUp, isLoading} = useSignUp()
 
     const onSubmit = (data: InputsSignupT) => {
