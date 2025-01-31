@@ -23,7 +23,7 @@ export const useSignUp = () => {
         mutationFn: async (data) => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signup, {
                 name: data.name,
-                username: data.username,
+                userName: data.username,
                 email: data.email,
                 password: data.password
             })
