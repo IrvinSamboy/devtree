@@ -5,13 +5,15 @@ import morgan from 'morgan'
 import { userContract } from './contracts/userContract';
 import { userRoutes } from './routes/user.routes';
 import { createExpressEndpoints } from '@ts-rest/express';
-
+import cors from 'cors'
+import { corsOptions } from './config/corsConfig';
 dotenv.config()
 
 const app = express()
 
 app.use(morgan("dev"))
 app.use(express.json())
+app.use(cors(corsOptions))
 createExpressEndpoints(userContract, userRoutes, app)
 
 
