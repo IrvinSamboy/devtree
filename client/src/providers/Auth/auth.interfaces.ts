@@ -2,14 +2,18 @@ import { UserI } from "../../interfaces/User.interface";
 
 export type signInRequestT = Omit<UserI, "username" | "name">
 
+export type MessageT = {
+    message: string
+}
+
 export interface ErrorMessage {
     status: number;
-    message: string;
+    data: MessageT;
 }
 
 export interface signInResponseI {
     status: number;
-    message: string;
+    data: MessageT;
 }
 
 

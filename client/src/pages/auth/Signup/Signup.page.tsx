@@ -25,7 +25,7 @@ export default function Signup() {
                 toast("User register correctly")
             },
             onError: (response) => {
-                toast(response.message)
+                toast(response.data.message)
             }
         })
     }
