@@ -3,7 +3,7 @@ import FormAuth from "../../../components/auth/FormAuth"
 import { useForm, Controller } from 'react-hook-form'
 import { InputsSignupT } from "../../../interfaces/User.interface"
 import { useSignUp } from "../../../providers/Auth"
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom"
 
 export default function Signup() {
@@ -39,7 +39,6 @@ export default function Signup() {
             titleForm={'Join DevTree!'}
             subTitleForm={'Sign up for free!'}
         >
-            <ToastContainer aria-label={undefined} />
             <form className='w-full space-y-5' onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                     name="username"
