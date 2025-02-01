@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { InputsSignupT } from "../../../interfaces/User.interface"
 import { useSignUp } from "../../../providers/Auth"
 import { ToastContainer, toast } from 'react-toastify';
-import { replace, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function Signup() {
 
