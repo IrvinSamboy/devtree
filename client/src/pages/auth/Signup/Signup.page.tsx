@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { InputsSignupT } from "../../../interfaces/User.interface"
 import { useSignUp } from "../../../providers/Auth"
 import { ToastContainer, toast } from 'react-toastify';
+import { replace, useNavigate } from "react-router-dom"
 
 export default function Signup() {
 
@@ -19,10 +20,13 @@ export default function Signup() {
     )
     const {mutate: signUp, isLoading} = useSignUp()
 
+    const navigate = useNavigate()
+
     const onSubmit = (data: InputsSignupT) => {
         signUp(data, {
             onSuccess: () => {
                 toast("User register correctly")
+                navigate('/auth/signin')
             },
             onError: (response) => {
                 toast(response.data.message)
