@@ -14,11 +14,11 @@ export default function Router() {
                   path="/auth/"
               >
                 <Route 
-                  path="/auth/signin"
+                  path="signin"
                   element={<Signin />}
                 />
                 <Route 
-                  path="/auth/signUp"
+                  path="signUp"
                   element={<Signup />}
                 />
               </Route>
