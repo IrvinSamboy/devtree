@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
 import { TSigninEschemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaBadResponse, TSignupEschemaRequest, TSignupEschemaResponse } from '../schemas/userEschema';
-
+import { genToken } from '../utils/handleJWT';
+import { Response } from 'express';
 
 export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
@@ -47,7 +48,7 @@ export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSign
     }
 }
 
-export const signin = async (ctx : {req: TSigninSchemaRequest}) : Promise<TSigninEschemaResponse | TSigninEschemaBadResponse> => {
+export const signin = async (ctx : {req: TSigninSchemaRequest, res: Response}) : Promise<TSigninEschemaResponse | TSigninEschemaBadResponse> => {
     try{
         const {email, password} = ctx.req.body
 
@@ -60,6 +61,9 @@ export const signin = async (ctx : {req: TSigninSchemaRequest}) : Promise<TSigni
 
 
         if(bcrypt.compareSync(password, userExits.password)) {
+            const token = genToken({userId: userExits._id})
+            ctx.res.cookie("devtreeToken", token, {httpOnly: true})
+
             return {
                 status: 200,
                 body: {message: "user logged in"}

@@ -7,6 +7,7 @@ import { userRoutes } from './routes/user.routes';
 import { createExpressEndpoints } from '@ts-rest/express';
 import cors from 'cors'
 import { corsOptions } from './config/corsConfig';
+import cookieParser from 'cookie-parser';
 dotenv.config()
 
 const app = express()
@@ -14,6 +15,7 @@ const app = express()
 app.use(morgan("dev"))
 app.use(express.json())
 app.use(cors(corsOptions))
+app.use(cookieParser())
 createExpressEndpoints(userContract, userRoutes, app)
 
 

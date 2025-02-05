@@ -5,11 +5,10 @@ dotenv.config()
 
 const JWT_SECRET : string = process.env.JWT_SECRET!
 
-export const genToken = (payload : unknown) => {
+console.log(JWT_SECRET)
 
-    const payloadJSON = JSON.stringify(payload)
-
-    return jwt.sign(payloadJSON, JWT_SECRET, {expiresIn: '1d'})
+export const genToken = (payload = {}) => {
+    return jwt.sign(payload, JWT_SECRET, {expiresIn: '24h'})
 }
 
 export const verifyToken = (token : string) => {
