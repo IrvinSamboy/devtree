@@ -1,5 +1,7 @@
 import { z } from 'zod'
 import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
+import { TsRestRequest } from '@ts-rest/express'
+import { userContract } from '../contracts/userContract'
 
 export const Message = z.object({
     message: z.string()
@@ -37,3 +39,11 @@ export const SigninEschemaBadResponse = z.object({
     status: BadStatusSchema,
     body: Message
 })
+
+export type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
+export type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
+export type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>
+
+export type TSigninSchemaRequest = TsRestRequest<typeof userContract.signin>;
+export type TSigninEschemaResponse = z.infer<typeof SigninEschemaResponse>
+export type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
