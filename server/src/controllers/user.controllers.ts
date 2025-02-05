@@ -1,19 +1,21 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse, SigninEschemaResponse, SigninEschemaBadResponse, SigninSchemaRequest  } from '../schemas/userEschema';
+import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse, SigninEschemaResponse, SigninEschemaBadResponse  } from '../schemas/userEschema';
 import z from "zod";
+import { TsRestRequest } from '@ts-rest/express';
+import { userContract } from '../contracts/userContract';
 
-type TSignupEschemaRequest = z.infer<typeof SignupEschemaRequest>
+type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
 type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
 type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>
 
-type TSigninSchemaRequest = z.infer<typeof SigninSchemaRequest>
+type TSigninSchemaRequest = TsRestRequest<typeof userContract.signin>;
 type TSigninEschemaResponse = z.infer<typeof SigninEschemaResponse>
 type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
 
-export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
+export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
-        const { userName, name, email, password } = body
+        const { userName, name, email, password } = ctx.req.body
 
         const userNameFormated = userName.replace(" ", "")
 
@@ -55,9 +57,9 @@ export const signup = async ({body} : {body : TSignupEschemaRequest }) : Promise
     }
 }
 
-export const signin = async ({body} : {body: TSigninSchemaRequest}) : Promise<TSigninEschemaResponse | TSigninEschemaBadResponse> => {
+export const signin = async (ctx : {req: TSigninSchemaRequest}) : Promise<TSigninEschemaResponse | TSigninEschemaBadResponse> => {
     try{
-        const {email, password} = body
+        const {email, password} = ctx.req.body
 
         const userExits = await userModel.findOne({email})
         
