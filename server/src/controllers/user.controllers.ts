@@ -1,17 +1,7 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { SignupEschemaBadResponse, SignupEschemaRequest, SignupEschemaResponse, SigninEschemaResponse, SigninEschemaBadResponse  } from '../schemas/userEschema';
-import z from "zod";
-import { TsRestRequest } from '@ts-rest/express';
-import { userContract } from '../contracts/userContract';
+import { TSigninEschemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaBadResponse, TSignupEschemaRequest, TSignupEschemaResponse } from '../schemas/userEschema';
 
-type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
-type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
-type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>
-
-type TSigninSchemaRequest = TsRestRequest<typeof userContract.signin>;
-type TSigninEschemaResponse = z.infer<typeof SigninEschemaResponse>
-type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
 
 export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
     try{
