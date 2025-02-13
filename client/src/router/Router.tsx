@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Signin from "../pages/auth/Signin/Signin.page"
 import RootLayout from "../components/layout/RootLayout"
 import Signup from "../pages/auth/Signup/Signup.page"
-import AppLayout from "../components/layout/AppLayout"
+import AppLayout from "../components/layout/appLayout"
 import DevTreeView from "../pages/Admin/DevTreeView/DevTreeView.page"
 import ProfileView from "../pages/Admin/ProfileView/ProfileView.page"
 

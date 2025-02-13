@@ -1,12 +1,10 @@
 
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import Logo from "../utils/Logo"
+import { Outlet } from "react-router-dom"
+import Logo from "../../utils/Logo"
 import { Link, User } from "lucide-react"
+import TabElement from "./components/TabElement"
 
 export default function AppLayout() {
-
-    const location = useLocation()
-    const navigate = useNavigate()
 
 return (
     <div className="space-y-5">
@@ -21,22 +19,18 @@ return (
         <main className="grid grid-cols-2 gap-3 max-w-[90%] mx-auto">
             <section className="space-y-4">
                 <div className="flex text-black items-center gap-10">
-                    <div 
-                        onClick={() => navigate('/admin')}
-                        className={`flex gap-3 items-center py-2 hover:text-mid-purple cursor-pointer border-b-2 
-                        ${location.pathname === '/admin'? 'text-mid-purple': 'border-transparent'}`}
+                    <TabElement 
+                        tabName='Links'
+                        path='/admin'
                     >
                         <Link />
-                        <p>Links</p>    
-                    </div>
-                    <div
-                        onClick={() => navigate('profile')} 
-                        className={`flex gap-3 items-center py-2 hover:text-mid-purple cursor-pointer border-b-2 
-                            ${location.pathname === '/admin/profile'? 'text-mid-purple': 'border-transparent'}`}
+                    </TabElement>
+                    <TabElement 
+                        tabName='Profile'
+                        path='/admin/profile'
                     >
                         <User />
-                        <p>Profile</p>
-                    </div>
+                    </TabElement>
                 </div>
                 <Outlet />
             </section>
