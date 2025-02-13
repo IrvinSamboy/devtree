@@ -44,15 +44,19 @@ export const UserDataSchemaRequest = z.object({
     id: z.string()
 })
 
+export const userData = ZUserEschema.omit({password: true})
+
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
-    body: ZUserEschema.omit({password: true})
+    body: userData
 })
 
-export const userDataSchemaBadResponse =z.object({
+export const userDataSchemaBadResponse = z.object({
     status: BadStatusSchema,
     body: Message
 })
+
+
 
 export type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
 export type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
@@ -61,3 +65,7 @@ export type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>
 export type TSigninSchemaRequest = TsRestRequest<typeof userContract.signin>;
 export type TSigninEschemaResponse = z.infer<typeof SigninEschemaResponse>
 export type TSigninEschemaBadResponse = z.infer<typeof SigninEschemaBadResponse>
+
+export type TUserDataSchemaRequest = TsRestRequest<typeof userContract.userData>
+export type TUserDataSchemaResponse = z.infer<typeof userDataSchemaResponse>
+export type TUserDataSchemaBadResponse = z.infer<typeof userDataSchemaBadResponse>

@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupEschemaRequest, SigninSchemaRequest, Message, UserDataSchemaRequest  } from '../schemas/userEschema';
+import { SignupEschemaRequest, SigninSchemaRequest, Message, userData  } from '../schemas/userEschema';
 
 const c = initContract();
 
@@ -29,11 +29,10 @@ export const userContract = c.router({
     },
 
     userData: {
-        method: 'POST',
+        method: 'GET',
         path: '/userData',
-        body: UserDataSchemaRequest,
         responses: {
-            200: Message,
+            200: userData,
             401: Message,
             404: Message,
             500: Message

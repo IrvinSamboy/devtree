@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { TSigninEschemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaBadResponse, TSignupEschemaRequest, TSignupEschemaResponse } from '../schemas/userEschema';
-import { genToken } from '../utils/handleJWT';
+import { TSigninEschemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaBadResponse, TSignupEschemaRequest, TSignupEschemaResponse, TUserDataSchemaBadResponse, TUserDataSchemaRequest, TUserDataSchemaResponse } from '../schemas/userEschema';
+import { genToken, verifyToken } from '../utils/handleJWT';
 import { Response } from 'express';
 
 export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
@@ -75,6 +75,45 @@ export const signin = async (ctx : {req: TSigninSchemaRequest, res: Response}) :
             body: {message: "unauthorized"}
         }
 
+    }
+    catch(e){
+        const errorMessage = (e as Error).message
+
+        return {
+            status: 500,
+            body: {message : errorMessage}
+        }
+    }
+}
+
+export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Response}) : Promise<TUserDataSchemaResponse | TUserDataSchemaBadResponse> => {
+    try{
+        const {devtreeToken} = ctx.req.cookies
+
+        const tokenVerified = verifyToken(devtreeToken)
+
+        if(typeof tokenVerified === 'object') {
+            const userExits = await userModel.findById(tokenVerified.id)
+
+            if(!userExits) return {
+                status: 404,
+                body: {message: "user not found"}
+            }
+
+            return {
+                status: 200,
+                body: {
+                    userName: userExits.userName,
+                    name: userExits.name,
+                    email: userExits.email,
+                }
+            }
+        }
+
+        return {
+            status: 401,
+            body: {message: 'unauthorized'}
+        }
     }
     catch(e){
         const errorMessage = (e as Error).message
