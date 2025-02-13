@@ -93,7 +93,7 @@ export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Respon
         const tokenVerified = verifyToken(devtreeToken)
 
         if(typeof tokenVerified === 'object') {
-            const userExits = await userModel.findById(tokenVerified.id)
+            const userExits = await userModel.findById(tokenVerified.userId)
 
             if(!userExits) return {
                 status: 404,
