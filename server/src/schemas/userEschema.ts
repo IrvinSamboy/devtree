@@ -40,6 +40,20 @@ export const SigninEschemaBadResponse = z.object({
     body: Message
 })
 
+export const UserDataSchemaRequest = z.object({
+    id: z.string()
+})
+
+export const userDataSchemaResponse = z.object({
+    status: PositiveStatusSchema,
+    body: ZUserEschema.omit({password: true})
+})
+
+export const userDataSchemaBadResponse =z.object({
+    status: BadStatusSchema,
+    body: Message
+})
+
 export type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
 export type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
 export type TSignupEschemaBadResponse = z.infer<typeof SignupEschemaBadResponse>

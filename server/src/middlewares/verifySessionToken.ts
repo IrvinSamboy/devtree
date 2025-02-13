@@ -11,7 +11,6 @@ export const verifySessionToken = (req : Request, res : Response, next : NextFun
 
         if(!tokenVerified) return res.status(403).json({message: 'Invalid sessionToken'})
         
-
         next()
     }
     catch  (e) {
