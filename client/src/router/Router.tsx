@@ -5,6 +5,7 @@ import Signup from "../pages/auth/Signup/Signup.page"
 import AppLayout from "../components/layout/appLayout"
 import DevTreeView from "../pages/Admin/DevTreeView/DevTreeView.page"
 import ProfileView from "../pages/Admin/ProfileView/ProfileView.page"
+import Loader from "../components/utils/Loader"
 
 export default function Router() {
   return (
@@ -13,6 +14,10 @@ export default function Router() {
             <Route
               element={<RootLayout />}
             >
+              <Route 
+                path="/"
+                element={<Loader />}
+              />
               <Route
                   path="/auth/"
               >
