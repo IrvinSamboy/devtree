@@ -10,7 +10,7 @@ export const useSignin = () => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signin, {
                 email: data.email,
                 password: data.password
-            })
+            }, {withCredentials: true})
 
             return response.data
         }
