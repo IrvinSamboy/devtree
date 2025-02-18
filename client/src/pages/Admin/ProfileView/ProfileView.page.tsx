@@ -38,7 +38,7 @@ export default function ProfileView() {
               placeHolder="User name"
               label="User name"
               type="text"
-              value={userData?.username}
+              value={userData?.name}
             />
             <Input
               placeHolder="email"

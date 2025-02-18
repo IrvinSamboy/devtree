@@ -7,7 +7,7 @@ export const useUserData = () => {
     return useQuery<userDataResponseT, ErrorMessageT>({
         queryKey: ["userData"],
         queryFn: async () => {
-            const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData)
+            const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData, {withCredentials: true})
             return response.data
         }
     })
