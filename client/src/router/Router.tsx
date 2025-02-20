@@ -6,6 +6,7 @@ import AppLayout from "../components/layout/appLayout"
 import DevTreeView from "../pages/Admin/DevTreeView/DevTreeView.page"
 import ProfileView from "../pages/Admin/ProfileView/ProfileView.page"
 import Loader from "../components/utils/Loader"
+import Page404 from "../pages/404/Page404.page"
 
 export default function Router() {
   return (
@@ -14,6 +15,7 @@ export default function Router() {
             <Route
               element={<RootLayout />}
             >
+              <Route path="*" element={<Page404 />} />
               <Route 
                 path="/"
                 element={<Loader />}
