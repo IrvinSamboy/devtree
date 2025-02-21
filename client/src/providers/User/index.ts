@@ -1,10 +1,10 @@
 import { apiDevTreeEndPoints } from "../endPoints";
 import { useQuery } from "react-query";
-import { userDataResponseT, ErrorMessageT } from "./user.interface";
+import { userDataResponseT, MessageT } from "./user.interface";
 import { apiDevTree } from "../apiClient";
 
 export const useUserData = () => {
-    return useQuery<userDataResponseT, ErrorMessageT>({
+    return useQuery<userDataResponseT, MessageT>({
         queryKey: ["userData"],
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData, {withCredentials: true})
