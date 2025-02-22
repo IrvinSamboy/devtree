@@ -29,8 +29,8 @@ export default function Signup() {
                 navigate('/auth/signin')
             },
             onError: (response) => {
-                toast(response.data.message)
-            }
+                toast(response.response?.data.message || 'Internal server error');
+            },
         })
     }
 

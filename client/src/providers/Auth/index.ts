@@ -19,7 +19,7 @@ export const useSignin = () => {
 }
 
 export const useSignUp = () => {
-    return useMutation<signUpResponseT, AxiosError, signUpRequestT>({
+    return useMutation<signUpResponseT, AxiosError<MessageT>, signUpRequestT>({
         mutationKey: ['signup'],
         mutationFn: async (data) => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signup, {
