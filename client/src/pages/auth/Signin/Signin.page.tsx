@@ -28,7 +28,7 @@ export default function Signin() {
         navigate('/')
       },
       onError: (response) => {
-        toast(response.message);
+        toast(response.response?.data.message || 'Internal server error');
       },
     });
   };

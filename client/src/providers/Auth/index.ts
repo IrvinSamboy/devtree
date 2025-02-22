@@ -2,9 +2,10 @@ import { apiDevTreeEndPoints } from "../endPoints";
 import { apiDevTree } from "../apiClient";
 import { useMutation } from 'react-query'
 import { signInRequestT, MessageT, signUpRequestT, signUpResponseT } from "./auth.interfaces";
+import { AxiosError } from "axios";
 
 export const useSignin = () => {
-    return useMutation<MessageT, MessageT, signInRequestT>({
+    return useMutation<MessageT, AxiosError<MessageT>, signInRequestT>({
         mutationKey: ['signin'],
         mutationFn: async (data) => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signin, {
@@ -18,7 +19,7 @@ export const useSignin = () => {
 }
 
 export const useSignUp = () => {
-    return useMutation<signUpResponseT, MessageT, signUpRequestT>({
+    return useMutation<signUpResponseT, AxiosError, signUpRequestT>({
         mutationKey: ['signup'],
         mutationFn: async (data) => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signup, {
