@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { useVerifySessionToken } from "../providers/Auth"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import Loader from "../components/utils/Loader"
 
 export default function VerifyTokenMiddleware() {
@@ -11,12 +11,18 @@ export default function VerifyTokenMiddleware() {
 
     const userAuthenticated = useMemo(
         () => {
-           refetch()
            return !isError
-        }, [location.pathname]
+        }, [isError]
     )
-
-    console.log(userAuthenticated)
+ 
+    useEffect(()=> {
+        refetch()
+    }, [location.pathname])
+    
+    
+    if(location.pathname === '/auth/signin') {
+        return <Outlet/>
+    }
 
     if(isLoading) {
         return <Loader />
