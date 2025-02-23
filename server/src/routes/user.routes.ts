@@ -1,6 +1,6 @@
 import { initServer } from "@ts-rest/express";
 import { userContract } from "../contracts/userContract";
-import { signup, signin, userData } from "../controllers/user.controllers";
+import { signup, signin, userData, verifyUSerSession } from "../controllers/user.controllers";
 import { verifySessionToken } from "../middlewares/verifySessionToken";
 
 const s = initServer()
@@ -13,6 +13,12 @@ export const userRoutes = s.router(userContract, {
             verifySessionToken
         ],
         handler: userData
+    },
+    verifyUserSession: {
+        middleware: [
+            verifySessionToken
+        ],
+        handler: verifyUSerSession
     }
 })
 
