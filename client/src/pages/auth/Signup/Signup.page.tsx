@@ -15,7 +15,7 @@ export default function Signup() {
     const { handleSubmit, formState: { errors }, control } = useForm<InputsSignupT>(
         {
             defaultValues: {
-                username: '',
+                userName: '',
                 name: '',
                 email: '',
                 password: ''
@@ -43,7 +43,7 @@ export default function Signup() {
         >
             <form className='w-full space-y-5' onSubmit={handleSubmit(onSubmit)}>
                 <Controller
-                    name="username"
+                    name="userName"
                     control={control}
                     rules={
                         {
@@ -56,7 +56,7 @@ export default function Signup() {
                             placeHolder="userName"
                             onChange={field.onChange}
                             value={field.value}
-                            errorMessage={errors.username && errors.username.message}
+                            errorMessage={errors.userName && errors.userName.message}
                             label="User name"
                         />
                     }
