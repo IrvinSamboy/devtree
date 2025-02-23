@@ -1,6 +1,6 @@
 import { apiDevTreeEndPoints } from "../endPoints";
 import { apiDevTree } from "../apiClient";
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { signInRequestT, MessageT, signUpRequestT, signUpResponseT } from "./auth.interfaces";
 import { AxiosError } from "axios";
 
@@ -33,3 +33,13 @@ export const useSignUp = () => {
         }
     })
 }
+
+export const useVerifySessionToken = () => {
+    useQuery<MessageT, AxiosError<MessageT>>({
+        queryKey: ['verifySessionToken'],
+        queryFn: async () => {
+            const response = await apiDevTree.get(apiDevTreeEndPoints.auth.tokenVerify, {withCredentials : true})
+            return response.data
+        }
+    })
+} 
