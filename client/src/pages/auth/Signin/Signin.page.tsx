@@ -5,6 +5,8 @@ import { InputsSigninT } from "../../../interfaces/User.interface";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignin } from "../../../providers/Auth";
 import { toast } from "react-toastify";
+import Button from "../../../components/ui/Button";
+import Loader from "../../../components/utils/Loader";
 export default function Signin() {
   const {
     handleSubmit,
@@ -77,13 +79,12 @@ export default function Signin() {
             />
           )}
         />
-
-        <button
+        <Button 
           disabled={isLoading}
-          className="w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer"
         >
-          {isLoading ? "Loading..." : "Sign-in"}
-        </button>
+          {isLoading ? <Loader styles="border-white !p-2"/> : "Sign-in"}
+        </Button>
+       
         <p className="text-gray-600">
           Don't have an account?{" "}
           <Link
