@@ -26,7 +26,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }, 
+    },
+    description: {
+        type: String,
+        default: ""
+    }
 }, {timestamps: true})
 
 export const userModel = mongoose.model<TUser>("userModel", userSchema)
