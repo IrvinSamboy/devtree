@@ -42,6 +42,7 @@ export const useVerifySessionToken = () => {
             return response.data
         },
         retry: 0,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: false
     })
 } 

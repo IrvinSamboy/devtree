@@ -25,7 +25,7 @@ export default function Signin() {
     signin(data, {
       onSuccess: () => {
         toast("User logged in!");
-        navigate('/')
+        navigate('/', {state: {skipMiddleware: true}})
       },
       onError: (response) => {
         toast(response.response?.data.message || 'Internal server error');

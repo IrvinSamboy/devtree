@@ -11,11 +11,19 @@ export default function VerifyTokenMiddleware() {
 
     const userAuthenticated = useMemo(
         () => {
+            if(location.state?.skipMiddleware){
+                return true
+            }    
            return !isError
-        }, [isError]
+        }, [isError, location.state?.skipMiddleware]
     )
  
     useEffect(()=> {
+        if(location.state?.skipMiddleware){
+            console.log(location.state)
+            location.state.skipMiddleware = false
+            return
+        }
         refetch()
     }, [location.pathname])
     
