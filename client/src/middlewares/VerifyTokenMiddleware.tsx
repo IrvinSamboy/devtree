@@ -27,13 +27,15 @@ export default function VerifyTokenMiddleware() {
         refetch()
     }, [location.pathname])
     
-    
-    if(location.pathname === '/auth/signin') {
-        return <Outlet/>
-    }
-
     if(isLoading) {
         return <Loader />
+    }
+
+    else if(location.pathname.includes('/auth')) {
+        if(userAuthenticated) {
+            return <Navigate to='/'/>
+        }
+        return <Outlet/>
     }
     
     else if(userAuthenticated) {
