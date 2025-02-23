@@ -47,6 +47,15 @@ export default function ProfileView() {
                 type="text"
                 value={userData?.email}
               />
+              <div className="flex flex-col space-y-1">
+                <label htmlFor="">Description</label>
+                <textarea 
+                  name="" 
+                  id=""
+                  className="bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black"
+                  value={userData?.description}
+                ></textarea>
+              </div>
               <div className="space-y-1">
                 <p>Image</p>
                 <div className={`py-10 px-4 border-mid-purple border rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
