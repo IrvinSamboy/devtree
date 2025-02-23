@@ -124,3 +124,10 @@ export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Respon
         }
     }
 }
+
+export const verifyUSerSession = async () : Promise<TSigninEschemaResponse> => {
+    return {
+        status: 200,
+        body: {message : "Authenticated"}
+    }
+}
