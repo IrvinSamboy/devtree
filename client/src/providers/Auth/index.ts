@@ -35,7 +35,7 @@ export const useSignUp = () => {
 }
 
 export const useVerifySessionToken = () => {
-    useQuery<MessageT, AxiosError<MessageT>>({
+    return useQuery<MessageT, AxiosError<MessageT>>({
         queryKey: ['verifySessionToken'],
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.auth.tokenVerify, {withCredentials : true})
