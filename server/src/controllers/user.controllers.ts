@@ -106,6 +106,7 @@ export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Respon
                     userName: userExits.userName,
                     name: userExits.name,
                     email: userExits.email,
+                    description: userExits.description
                 }
             }
         }
