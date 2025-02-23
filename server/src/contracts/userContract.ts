@@ -40,6 +40,19 @@ export const userContract = c.router({
         summary: 'get user data'
     },
 
+    updateUserData : {
+        method: 'PUT',
+        path: '/updateUserData/:id',
+        body: userData,
+        responses: {
+            200: userData,
+            401: Message,
+            404: Message,
+            500: Message
+        },
+        summary: 'update user data'
+    },
+
     verifyUserSession: {
         method: 'GET',
         path: '/verifyUSerSession',
