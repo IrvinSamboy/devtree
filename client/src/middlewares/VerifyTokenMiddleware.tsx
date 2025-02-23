@@ -16,6 +16,8 @@ export default function VerifyTokenMiddleware() {
         }, [location.pathname]
     )
 
+    console.log(userAuthenticated)
+
     if(isLoading) {
         return <Loader />
     }

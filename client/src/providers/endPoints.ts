@@ -2,7 +2,7 @@ export const apiDevTreeEndPoints = {
     auth : {
         signin: '/signin/',
         signup: '/signup/',
-        tokenVerify: '/verifySessionToken/'
+        tokenVerify: '/verifyUSerSession/'
     },
     user: {
         userData: '/userData'

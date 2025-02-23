@@ -40,6 +40,8 @@ export const useVerifySessionToken = () => {
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.auth.tokenVerify, {withCredentials : true})
             return response.data
-        }
+        },
+        retry: 0,
+        refetchOnWindowFocus: false
     })
 } 

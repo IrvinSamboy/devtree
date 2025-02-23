@@ -7,38 +7,41 @@ import DevTreeView from "../pages/Admin/DevTreeView/DevTreeView.page"
 import ProfileView from "../pages/Admin/ProfileView/ProfileView.page"
 import Loader from "../components/utils/Loader"
 import Page404 from "../pages/404/Page404.page"
+import VerifyTokenMiddleware from "../middlewares/VerifyTokenMiddleware"
 
 export default function Router() {
   return (
     <BrowserRouter >
-        <Routes>
+      <Routes>
+        <Route element={<VerifyTokenMiddleware />}>
+          <Route
+            element={<RootLayout />}
+          >
+            <Route path="*" element={<Page404 />} />
             <Route
-              element={<RootLayout />}
+              path="/"
+              element={<Loader />}
+            />
+            <Route
+              path="/auth/"
             >
-              <Route path="*" element={<Page404 />} />
-              <Route 
-                path="/"
-                element={<Loader />}
+              <Route
+                path="signin"
+                element={<Signin />}
               />
               <Route
-                  path="/auth/"
-              >
-                <Route 
-                  path="signin"
-                  element={<Signin />}
-                />
-                <Route 
-                  path="signUp"
-                  element={<Signup />}
-                />
-              </Route>
-
-              <Route path="/admin" element={<AppLayout />}>
-                <Route index={true} element={<DevTreeView />} />
-                <Route path='profile' element={<ProfileView />} />
-              </Route>
+                path="signUp"
+                element={<Signup />}
+              />
             </Route>
-        </Routes>
+
+            <Route path="/admin" element={<AppLayout />}>
+              <Route index={true} element={<DevTreeView />} />
+              <Route path='profile' element={<ProfileView />} />
+            </Route>
+          </Route>
+        </Route>
+      </Routes>
     </BrowserRouter>
   )
 }
