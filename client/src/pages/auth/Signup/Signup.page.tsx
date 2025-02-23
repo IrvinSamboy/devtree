@@ -5,6 +5,8 @@ import { InputsSignupT } from "../../../interfaces/User.interface"
 import { useSignUp } from "../../../providers/Auth"
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom"
+import Button from "../../../components/ui/Button"
+import Loader from "../../../components/utils/Loader"
 
 export default function Signup() {
 
@@ -12,7 +14,7 @@ export default function Signup() {
 
     const { handleSubmit, formState: { errors }, control } = useForm<InputsSignupT>(
         {
-            defaultValues : {
+            defaultValues: {
                 username: '',
                 name: '',
                 email: '',
@@ -20,7 +22,7 @@ export default function Signup() {
             }
         }
     )
-    const {mutate: signUp, isLoading} = useSignUp()
+    const { mutate: signUp, isLoading } = useSignUp()
 
     const onSubmit = (data: InputsSignupT) => {
         signUp(data, {
@@ -120,12 +122,12 @@ export default function Signup() {
                         />
                     }
                 />
+                <Button
+                    disabled={isLoading}
+                >
+                    {isLoading ? <Loader styles="border-white !p-2" /> : "Sign-up"}
+                </Button>
 
-                <button
-                    disabled={isLoading} 
-                    className='w-full text-center p-2 bg-mid-purple font-bold text-white rounded-lg cursor-pointer'>
-                    {isLoading? "Loading..." : "Sign-up"}
-                </button>
             </form>
         </FormAuth>
     )
