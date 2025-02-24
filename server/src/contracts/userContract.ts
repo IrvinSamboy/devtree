@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupSchemaRequest, SigninSchemaRequest, Message, userData  } from '../schemas/userSchema';
+import { SignupSchemaRequest, SigninSchemaRequest, Message, userData, updateUserDataSchemaRequest  } from '../schemas/userSchema';
 
 const c = initContract();
 
@@ -42,8 +42,8 @@ export const userContract = c.router({
 
     updateUserData : {
         method: 'PUT',
-        path: '/updateUserData/:id',
-        body: userData,
+        path: '/updateUserData',
+        body: updateUserDataSchemaRequest,
         responses: {
             200: userData,
             401: Message,
