@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupEschemaRequest, SigninSchemaRequest, Message, userData  } from '../schemas/userEschema';
+import { SignupSchemaRequest, SigninSchemaRequest, Message, userData  } from '../schemas/userSchema';
 
 const c = initContract();
 
@@ -7,9 +7,9 @@ export const userContract = c.router({
     signup: {
         method: 'POST',
         path: '/signup/',
-        body: SignupEschemaRequest,
+        body: SignupSchemaRequest,
         responses: {
-            200: SignupEschemaRequest,
+            200: SignupSchemaRequest,
             500: Message
         },
         summary: 'user registration'

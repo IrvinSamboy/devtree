@@ -7,7 +7,7 @@ export const Message = z.object({
     message: z.string()
 })
 
-export const ZUserEschema = z.object({
+export const ZUserSchema = z.object({
     userName: z.string().min(4, {message: "User name must have at least 4 characters"}),
     name: z.string().min(4, {message: "Name must have at least 4 characters"}),
     email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {message: "Invalid email address"}),
@@ -15,9 +15,9 @@ export const ZUserEschema = z.object({
     description: z.string()
 })
 
-export const SignupEschemaResponse = z.object({
+export const SignupSchemaResponse = z.object({
     status: PositiveStatusSchema,
-    body: ZUserEschema
+    body: ZUserSchema
 })
 
 export const SchemaBadResponse = z.object({
@@ -25,13 +25,13 @@ export const SchemaBadResponse = z.object({
     body: Message
 })
 
-export const SignupEschemaRequest = ZUserEschema
+export const SignupSchemaRequest = ZUserSchema
 
-const SigninSchema = ZUserEschema.omit({name: true, userName: true})
+const SigninSchema = ZUserSchema.omit({name: true, userName: true})
 
 export const SigninSchemaRequest = SigninSchema
 
-export const SigninEschemaResponse = z.object({
+export const SigninSchemaResponse = z.object({
     status: PositiveStatusSchema,
     body: Message
 })
@@ -40,7 +40,7 @@ export const UserDataSchemaRequest = z.object({
     id: z.string()
 })
 
-export const userData = ZUserEschema.omit({password: true})
+export const userData = ZUserSchema.omit({password: true})
 
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
@@ -49,11 +49,11 @@ export const userDataSchemaResponse = z.object({
 
 export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
 
-export type TSignupEschemaRequest = TsRestRequest<typeof userContract.signup>;
-export type TSignupEschemaResponse = z.infer<typeof SignupEschemaResponse>
+export type TSignupSchemaRequest = TsRestRequest<typeof userContract.signup>;
+export type TSignupSchemaResponse = z.infer<typeof SignupSchemaResponse>
 
 export type TSigninSchemaRequest = TsRestRequest<typeof userContract.signin>;
-export type TSigninEschemaResponse = z.infer<typeof SigninEschemaResponse>
+export type TSigninSchemaResponse = z.infer<typeof SigninSchemaResponse>
 
 export type TUserDataSchemaRequest = TsRestRequest<typeof userContract.userData>
 export type TUserDataSchemaResponse = z.infer<typeof userDataSchemaResponse>

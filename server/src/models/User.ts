@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { ZUserEschema } from "../schemas/userEschema";
+import { ZUserSchema } from "../schemas/userSchema";
 import z from "zod";
 
-type TUser = z.infer<typeof ZUserEschema>
+type TUser = z.infer<typeof ZUserSchema>
 
 const userSchema = new mongoose.Schema({
     userName : {
