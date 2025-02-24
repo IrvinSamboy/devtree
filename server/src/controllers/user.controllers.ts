@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { TSchemaBadResponse, TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest } from '../schemas/userSchema';
+import { TSchemaBadResponse, TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse } from '../schemas/userSchema';
 import { genToken, verifyToken } from '../utils/handleJWT';
 import { Response } from 'express';
 
@@ -126,7 +126,7 @@ export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response
         }
     }
 }
-export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }) => {
+export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }) : Promise<TupdateUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
         const { id, userName, name, email, description } = ctx.req.body
 
@@ -137,7 +137,7 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             body: { message: "user not found" }
         }
 
-        const userUpdated = userModel.findByIdAndUpdate(id, { userName, name, email, description }, { new: true })
+        const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, email, description }, { new: true })
 
         if (!userUpdated) return {
             status: 400,
@@ -146,7 +146,12 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 
         return {
             status: 200,
-            body: userUpdated
+            body: {
+                userName: userUpdated.userName,
+                name: userUpdated.name,
+                email: userUpdated.email,
+                description: userUpdated.description
+            }
         }
 
     }

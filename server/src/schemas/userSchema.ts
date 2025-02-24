@@ -49,7 +49,12 @@ export const userDataSchemaResponse = z.object({
 
 export const updateUserDataSchemaRequest = z.object({
     id: z.string(),
-  }).merge(ZUserSchema.omit({ password: true }));
+}).merge(ZUserSchema.omit({ password: true }));
+
+export const updateUserDataSchemaResponse = z.object({
+    status: PositiveStatusSchema,
+    body: userData
+})
 
 export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
 
@@ -63,3 +68,4 @@ export type TUserDataSchemaRequest = TsRestRequest<typeof userContract.userData>
 export type TUserDataSchemaResponse = z.infer<typeof userDataSchemaResponse>
 
 export type TupdateUserDataSchemaRequest = TsRestRequest<typeof userContract.updateUserData>
+export type TupdateUserDataSchemaResponse = z.infer<typeof updateUserDataSchemaResponse>
