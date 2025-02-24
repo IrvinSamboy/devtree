@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { TSigninEschemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaBadResponse, TSignupEschemaRequest, TSignupEschemaResponse, TUserDataSchemaBadResponse, TUserDataSchemaRequest, TUserDataSchemaResponse } from '../schemas/userEschema';
+import { TSchemaBadResponse, TSigninEschemaResponse, TSigninSchemaRequest, TSignupEschemaRequest, TSignupEschemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse } from '../schemas/userEschema';
 import { genToken, verifyToken } from '../utils/handleJWT';
 import { Response } from 'express';
 
-export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSignupEschemaBadResponse> => {
+export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSignupEschemaResponse | TSchemaBadResponse> => {
     try{
         const { userName, name, email, password } = ctx.req.body
 
@@ -48,7 +48,8 @@ export const signup = async (ctx : {req: TSignupEschemaRequest}) : Promise<TSign
     }
 }
 
-export const signin = async (ctx : {req: TSigninSchemaRequest, res: Response}) : Promise<TSigninEschemaResponse | TSigninEschemaBadResponse> => {
+export const signin = async (ctx : {req: TSigninSchemaRequest, res: Response}) : Promise<TSigninEschemaResponse | TSchemaBadResponse
+> => {
     try{
         const {email, password} = ctx.req.body
 
@@ -86,7 +87,7 @@ export const signin = async (ctx : {req: TSigninSchemaRequest, res: Response}) :
     }
 }
 
-export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Response}) : Promise<TUserDataSchemaResponse | TUserDataSchemaBadResponse> => {
+export const userData = async (ctx : {req : TUserDataSchemaRequest, res : Response}) : Promise<TUserDataSchemaResponse | TSchemaBadResponse> => {
     try{
         const {devtreeToken} = ctx.req.cookies
 
