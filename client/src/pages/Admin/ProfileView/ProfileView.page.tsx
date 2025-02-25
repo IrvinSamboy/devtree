@@ -53,6 +53,11 @@ export default function ProfileView() {
               <Controller 
                 control={control}
                 name="userName"
+                rules={
+                  {
+                    required: "user name is required"
+                  }
+                }
                 render={({field}) => (
                   <Input
                     placeHolder="User name"
@@ -67,6 +72,11 @@ export default function ProfileView() {
               <Controller 
                 control={control}
                 name="email"
+                rules={
+                  {
+                    required: "E-mail is required"
+                  }
+                }
                 render={({field}) => (
                   <Input
                     placeHolder="E-mail"
