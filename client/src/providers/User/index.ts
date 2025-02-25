@@ -1,14 +1,30 @@
 import { apiDevTreeEndPoints } from "../endPoints";
-import { useQuery } from "react-query";
-import { userDataResponseT, MessageT } from "./user.interface";
+import { useMutation, useQuery } from "react-query";
+import { userData, MessageT } from "./user.interface";
 import { apiDevTree } from "../apiClient";
 import { AxiosError } from "axios";
 
 export const useUserData = () => {
-    return useQuery<userDataResponseT, AxiosError<MessageT>>({
+    return useQuery<userData, AxiosError<MessageT>>({
         queryKey: ["userData"],
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData, {withCredentials: true})
+            return response.data
+        }
+    })
+}
+
+export const useUpdateUserData = () => {
+    return useMutation<userData, AxiosError<MessageT>, userData>({
+        mutationKey: ["updateUserData"],
+        mutationFn: async (data) => {
+            const response = await apiDevTree.post(apiDevTreeEndPoints.user.updateUserDAta, {
+                userName: data.userName,
+                email: data.email,
+                name: data.name,
+                description: data.description
+            })
+
             return response.data
         }
     })
