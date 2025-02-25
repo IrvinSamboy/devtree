@@ -5,6 +5,7 @@ export const apiDevTreeEndPoints = {
         tokenVerify: '/verifyUSerSession/'
     },
     user: {
-        userData: '/userData'
+        userData: '/userData',
+        updateUserDAta: '/updateUserDAta'
     }
 }
