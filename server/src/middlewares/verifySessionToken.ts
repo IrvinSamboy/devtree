@@ -1,6 +1,15 @@
 import { NextFunction, Request, Response } from "express"
 import { verifyToken } from "../utils/handleJWT"
 
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Express {
+        export interface Request {
+            id? : string
+        }
+    }
+}
+
 export const verifySessionToken = (req : Request, res : Response, next : NextFunction) => {
     try {
         const {devtreeToken} = req.cookies
@@ -10,7 +19,11 @@ export const verifySessionToken = (req : Request, res : Response, next : NextFun
         const tokenVerified = verifyToken(devtreeToken)
 
         if(!tokenVerified) return res.status(403).json({message: 'Invalid sessionToken'})
-        
+
+        if(typeof tokenVerified !== "string" && tokenVerified.userId) {
+            req.id = tokenVerified.userId
+        }
+
         next()
     }
     catch  (e) {
