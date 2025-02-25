@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
 import { TSchemaBadResponse, TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse } from '../schemas/userSchema';
-import { genToken, verifyToken } from '../utils/handleJWT';
+import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
 
 export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
@@ -89,32 +89,23 @@ export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }):
 
 export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response }): Promise<TUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
-        const { devtreeToken } = ctx.req.cookies
+        const {id} = ctx.req
 
-        const tokenVerified = verifyToken(devtreeToken)
+        const userExits = await userModel.findById(id)
 
-        if (typeof tokenVerified === 'object') {
-            const userExits = await userModel.findById(tokenVerified.userId)
-
-            if (!userExits) return {
-                status: 404,
-                body: { message: "user not found" }
-            }
-
-            return {
-                status: 200,
-                body: {
-                    userName: userExits.userName,
-                    name: userExits.name,
-                    email: userExits.email,
-                    description: userExits.description
-                }
-            }
+        if (!userExits) return {
+            status: 404,
+            body: { message: "user not found" }
         }
 
         return {
-            status: 401,
-            body: { message: 'unauthorized' }
+            status: 200,
+            body: {
+                userName: userExits.userName,
+                name: userExits.name,
+                email: userExits.email,
+                description: userExits.description
+            }
         }
     }
     catch (e) {
