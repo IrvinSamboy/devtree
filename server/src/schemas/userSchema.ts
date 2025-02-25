@@ -27,7 +27,7 @@ export const SchemaBadResponse = z.object({
 
 export const SignupSchemaRequest = ZUserSchema
 
-const SigninSchema = ZUserSchema.omit({name: true, userName: true})
+const SigninSchema = ZUserSchema.omit({name: true, userName: true, description: true})
 
 export const SigninSchemaRequest = SigninSchema
 
