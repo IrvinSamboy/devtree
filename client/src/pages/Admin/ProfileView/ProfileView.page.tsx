@@ -19,12 +19,17 @@ export default function ProfileView() {
   }
 
   const { 
-          control, 
+          control,
+          register,
           formState:{errors}, 
           handleSubmit 
   } = useForm<userData>({
     defaultValues: defautValues
   })
+
+  const onSubmit = (data : userData) => {
+    console.log(data)
+  }
 
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -47,7 +52,7 @@ export default function ProfileView() {
         isError ?
           <p>ERROR</p>
           :
-          <>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="text-center text-xl font-semibold">Edit information</h2>
             <div className="space-y-2">
               <Controller 
@@ -91,10 +96,8 @@ export default function ProfileView() {
               <div className="flex flex-col space-y-1">
                 <label htmlFor="">Description</label>
                 <textarea 
-                  name="" 
-                  id=""
+                  {...register("description")}
                   className="bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black"
-                  value={userData?.description}
                 ></textarea>
               </div>
               <div className="space-y-1">
@@ -109,7 +112,7 @@ export default function ProfileView() {
                 {isLoading ? <Loader styles="border-white !p-2" /> : "Send"}
               </Button>
             </div>
-          </>
+          </form>
       }
     </div>
   )
