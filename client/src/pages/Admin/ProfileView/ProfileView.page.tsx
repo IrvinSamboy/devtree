@@ -3,13 +3,28 @@ import Input from "../../../components/ui/Input"
 import { useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
-
+import { useForm, Controller } from "react-hook-form"
+import { userData } from "../../../providers/User/user.interface"
 export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
 
   const { data: userData, isError, isLoading } = useUserData()
 
+  const defautValues = {
+    userName: userData?.userName || '',
+    name: userData?.name || '',
+    email: userData?.email || '',
+    description: userData?.description || ''
+  }
+
+  const { 
+          control, 
+          formState:{errors}, 
+          handleSubmit 
+  } = useForm<userData>({
+    defaultValues: defautValues
+  })
 
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -35,17 +50,33 @@ export default function ProfileView() {
           <>
             <h2 className="text-center text-xl font-semibold">Edit information</h2>
             <div className="space-y-2">
-              <Input
-                placeHolder="User name"
-                label="User name"
-                type="text"
-                value={userData?.userName}
+              <Controller 
+                control={control}
+                name="userName"
+                render={({field}) => (
+                  <Input
+                    placeHolder="User name"
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="User name"
+                    type="text"
+                    errorMessage={errors.userName && errors.userName.message}
+                  />
+                )}
               />
-              <Input
-                placeHolder="email"
-                label="Email"
-                type="text"
-                value={userData?.email}
+              <Controller 
+                control={control}
+                name="email"
+                render={({field}) => (
+                  <Input
+                    placeHolder="E-mail"
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="email"
+                    type="text"
+                    errorMessage={errors.email && errors.email.message}
+                  />
+                )}
               />
               <div className="flex flex-col space-y-1">
                 <label htmlFor="">Description</label>
