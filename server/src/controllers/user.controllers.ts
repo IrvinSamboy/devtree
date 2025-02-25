@@ -128,8 +128,8 @@ export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response
 }
 export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }) : Promise<TupdateUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
-        const { id, userName, name, email, description } = ctx.req.body
-
+        const { userName, name, email, description } = ctx.req.body
+        const {id} = ctx.req
         const userExits = userModel.findById(id)
 
         if (!userExits) return {
