@@ -4,7 +4,7 @@ import { useUpdateUserData, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
 import { useForm, Controller } from "react-hook-form"
-import { updateUserDataPayload, userData } from "../../../providers/User/user.interface"
+import { updateUserDataPayload } from "../../../providers/User/user.interface"
 import { toast } from "react-toastify"
 export default function ProfileView() {
 
@@ -17,7 +17,6 @@ export default function ProfileView() {
   const defautValues = {
     userName: userData?.userName || '',
     name: userData?.name || '',
-    email: userData?.email || '',
     description: userData?.description || ''
   }
 
@@ -26,7 +25,7 @@ export default function ProfileView() {
           register,
           formState:{errors}, 
           handleSubmit 
-  } = useForm<userData>({
+  } = useForm<updateUserDataPayload>({
     defaultValues: defautValues
   })
 
@@ -82,25 +81,6 @@ export default function ProfileView() {
                     label="User name"
                     type="text"
                     errorMessage={errors.userName && errors.userName.message}
-                  />
-                )}
-              />
-              <Controller 
-                control={control}
-                name="email"
-                rules={
-                  {
-                    required: "E-mail is required"
-                  }
-                }
-                render={({field}) => (
-                  <Input
-                    placeHolder="E-mail"
-                    value={field.value}
-                    onChange={field.onChange}
-                    label="email"
-                    type="text"
-                    errorMessage={errors.email && errors.email.message}
                   />
                 )}
               />
