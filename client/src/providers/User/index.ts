@@ -8,7 +8,7 @@ export const useUserData = () => {
     return useQuery<userData, AxiosError<MessageT>>({
         queryKey: ["userData"],
         queryFn: async () => {
-            const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData, {withCredentials: true})
+            const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData)
             return response.data
         }
     })
@@ -23,7 +23,7 @@ export const useUpdateUserData = () => {
                 email: data.email,
                 name: data.name,
                 description: data.description
-            }, {withCredentials: true}
+            }
         )
 
             return response.data

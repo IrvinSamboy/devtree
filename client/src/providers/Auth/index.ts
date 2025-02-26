@@ -11,7 +11,7 @@ export const useSignin = () => {
             const response = await apiDevTree.post(apiDevTreeEndPoints.auth.signin, {
                 email: data.email,
                 password: data.password
-            }, {withCredentials: true})
+            })
 
             return response.data
         }
@@ -38,7 +38,7 @@ export const useVerifySessionToken = () => {
     return useQuery<MessageT, AxiosError<MessageT>>({
         queryKey: ['verifySessionToken'],
         queryFn: async () => {
-            const response = await apiDevTree.get(apiDevTreeEndPoints.auth.tokenVerify, {withCredentials : true})
+            const response = await apiDevTree.get(apiDevTreeEndPoints.auth.tokenVerify)
             return response.data
         },
         retry: 0,
