@@ -133,6 +133,16 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             description = userExits.description 
         } = ctx.req.body
 
+        if(userName !== userExits.userName) {
+            const userNameExits = await userModel.findOne({userName})
+            if(userNameExits) {
+                return {
+                    status: 400,
+                    body: {message: "There is already a user with this name"}
+                }
+            }
+        } 
+
         const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, description }, { new: true })
 
         if (!userUpdated) return {
