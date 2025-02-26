@@ -10,7 +10,7 @@ export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
 
-  const { data: userData, isError, isLoading } = useUserData()
+  const { data: userData, isError, isLoading, refetch } = useUserData()
 
   const {mutate: updateUserData, isLoading: isLoadingUpdate} = useUpdateUserData()
 
@@ -34,6 +34,7 @@ export default function ProfileView() {
     updateUserData(data, {
       onSuccess: () => {
         toast("User data updated")
+        refetch()
       },
       onError: (response) => {
         toast(response.response?.data.message || "Internal server error")
