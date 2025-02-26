@@ -119,14 +119,20 @@ export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response
 }
 export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }) : Promise<TupdateUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
-        const { userName, name, email, description } = ctx.req.body
         const {id} = ctx.req
-        const userExits = userModel.findById(id)
+        const userExits = await userModel.findById(id)
 
         if (!userExits) return {
             status: 404,
             body: { message: "user not found" }
         }
+
+        const { 
+            userName = userExits.userName, 
+            name = userExits.name, 
+            email = userExits.email, 
+            description = userExits.description 
+        } = ctx.req.body
 
         const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, email, description }, { new: true })
 
