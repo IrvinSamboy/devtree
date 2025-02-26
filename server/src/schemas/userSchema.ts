@@ -12,7 +12,7 @@ export const ZUserSchema = z.object({
     name: z.string().min(4, {message: "Name must have at least 4 characters"}),
     email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {message: "Invalid email address"}),
     password: z.string().nonempty({message: "Password is required"}),
-    description: z.string().default("")
+    description: z.string().optional()
 })
 
 export const SignupSchemaResponse = z.object({
