@@ -4,7 +4,7 @@ import { useUpdateUserData, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
 import { useForm, Controller } from "react-hook-form"
-import { userData } from "../../../providers/User/user.interface"
+import { updateUserDataPayload, userData } from "../../../providers/User/user.interface"
 import { toast } from "react-toastify"
 export default function ProfileView() {
 
@@ -30,7 +30,7 @@ export default function ProfileView() {
     defaultValues: defautValues
   })
 
-  const onSubmit = (data : userData) => {
+  const onSubmit = (data : updateUserDataPayload) => {
     updateUserData(data, {
       onSuccess: () => {
         toast("User data updated")
