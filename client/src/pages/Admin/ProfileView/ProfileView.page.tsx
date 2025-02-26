@@ -1,15 +1,18 @@
 import { useState } from "react"
 import Input from "../../../components/ui/Input"
-import { useUserData } from "../../../providers/User"
+import { useUpdateUserData, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
 import { useForm, Controller } from "react-hook-form"
 import { userData } from "../../../providers/User/user.interface"
+import { toast } from "react-toastify"
 export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
 
   const { data: userData, isError, isLoading } = useUserData()
+
+  const {mutate: updateUserData, isLoading: isLoadingUpdate} = useUpdateUserData()
 
   const defautValues = {
     userName: userData?.userName || '',
@@ -28,7 +31,14 @@ export default function ProfileView() {
   })
 
   const onSubmit = (data : userData) => {
-    console.log(data)
+    updateUserData(data, {
+      onSuccess: () => {
+        toast("User data updated")
+      },
+      onError: (response) => {
+        toast(response.response?.data.message || "Internal server error")
+      }
+    })
   }
 
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -109,7 +119,7 @@ export default function ProfileView() {
               <Button
                 disabled={isLoading}
               >
-                {isLoading ? <Loader styles="border-white !p-2" /> : "Send"}
+                {isLoadingUpdate ? <Loader styles="border-white !p-2" /> : "Send"}
               </Button>
             </div>
           </form>
