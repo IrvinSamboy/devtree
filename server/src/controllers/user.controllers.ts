@@ -145,7 +145,6 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             body: {
                 userName: userUpdated.userName,
                 name: userUpdated.name,
-                email: userUpdated.email,
                 description: userUpdated.description
             }
         }

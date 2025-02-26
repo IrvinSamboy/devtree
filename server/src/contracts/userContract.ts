@@ -32,7 +32,7 @@ export const userContract = c.router({
         method: 'GET',
         path: '/userData',
         responses: {
-            200: userData,
+            200: userData.omit({email: true}),
             401: Message,
             404: Message,
             500: Message

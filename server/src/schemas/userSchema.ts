@@ -40,22 +40,22 @@ export const UserDataSchemaRequest = z.object({
     id: z.string()
 })
 
-export const userData = ZUserSchema.omit({password: true}).extend({
-    userName: z.string().optional(),
-    name: z.string().optional(),
-    description: z.string().optional()
-})
+export const userData = ZUserSchema.omit({password: true})
 
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
     body: userData
 })
 
-export const updateUserDataSchemaRequest = userData.omit({email: true})
+export const updateUserDataSchemaRequest = userData.omit({email: true}).extend({
+    userName: z.string().optional(),
+    name: z.string().optional(),
+    description: z.string().optional()
+})
 
 export const updateUserDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
-    body: userData
+    body: userData.omit({email: true})
 })
 
 export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
