@@ -130,11 +130,10 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
         const { 
             userName = userExits.userName, 
             name = userExits.name, 
-            email = userExits.email, 
             description = userExits.description 
         } = ctx.req.body
 
-        const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, email, description }, { new: true })
+        const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, description }, { new: true })
 
         if (!userUpdated) return {
             status: 400,

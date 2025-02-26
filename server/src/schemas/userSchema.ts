@@ -43,7 +43,6 @@ export const UserDataSchemaRequest = z.object({
 export const userData = ZUserSchema.omit({password: true}).extend({
     userName: z.string().optional(),
     name: z.string().optional(),
-    email: z.string().optional(),
     description: z.string().optional()
 })
 
@@ -52,7 +51,7 @@ export const userDataSchemaResponse = z.object({
     body: userData
 })
 
-export const updateUserDataSchemaRequest = userData
+export const updateUserDataSchemaRequest = userData.omit({email: true})
 
 export const updateUserDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
