@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Input from "../../../components/ui/Input"
 import { useUpdateUserData, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
@@ -12,24 +12,29 @@ export default function ProfileView() {
 
   const { data: userData, isError, isLoading, refetch } = useUserData()
 
-  const {mutate: updateUserData, isLoading: isLoadingUpdate} = useUpdateUserData()
+  const { mutate: updateUserData, isLoading: isLoadingUpdate } = useUpdateUserData()
 
-  const defautValues = {
-    userName: userData?.userName || '',
-    name: userData?.name || '',
-    description: userData?.description || ''
+  const defaultValues = {
+    userName: '',
+    description: '',
+    name: ''
   }
 
-  const { 
-          control,
-          register,
-          formState:{errors}, 
-          handleSubmit 
+  const {
+    control,
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset
   } = useForm<updateUserDataPayload>({
-    defaultValues: defautValues
+    defaultValues: defaultValues
   })
 
-  const onSubmit = (data : updateUserDataPayload) => {
+  useEffect(()=> {
+    reset(userData)
+  }, [userData])
+
+  const onSubmit = (data: updateUserDataPayload) => {
     updateUserData(data, {
       onSuccess: () => {
         toast("User data updated")
@@ -65,7 +70,7 @@ export default function ProfileView() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="text-center text-xl font-semibold">Edit information</h2>
             <div className="space-y-2">
-              <Controller 
+              <Controller
                 control={control}
                 name="userName"
                 rules={
@@ -73,7 +78,7 @@ export default function ProfileView() {
                     required: "user name is required"
                   }
                 }
-                render={({field}) => (
+                render={({ field }) => (
                   <Input
                     placeHolder="User name"
                     value={field.value}
@@ -86,7 +91,7 @@ export default function ProfileView() {
               />
               <div className="flex flex-col space-y-1">
                 <label htmlFor="">Description</label>
-                <textarea 
+                <textarea
                   {...register("description")}
                   className="bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black"
                 ></textarea>
