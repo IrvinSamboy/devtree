@@ -18,12 +18,13 @@ export const useUpdateUserData = () => {
     return useMutation<userData, AxiosError<MessageT>, userData>({
         mutationKey: ["updateUserData"],
         mutationFn: async (data) => {
-            const response = await apiDevTree.post(apiDevTreeEndPoints.user.updateUserDAta, {
+            const response = await apiDevTree.put(apiDevTreeEndPoints.user.updateUserDAta, {
                 userName: data.userName,
                 email: data.email,
                 name: data.name,
                 description: data.description
-            })
+            }, {withCredentials: true}
+        )
 
             return response.data
         }
