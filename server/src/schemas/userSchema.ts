@@ -40,7 +40,12 @@ export const UserDataSchemaRequest = z.object({
     id: z.string()
 })
 
-export const userData = ZUserSchema.omit({password: true})
+export const userData = ZUserSchema.omit({password: true}).extend({
+    userName: z.string().optional(),
+    name: z.string().optional(),
+    email: z.string().optional(),
+    description: z.string().optional()
+})
 
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
