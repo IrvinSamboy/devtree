@@ -52,7 +52,7 @@ export const userDataSchemaResponse = z.object({
     body: userData
 })
 
-export const updateUserDataSchemaRequest = ZUserSchema.omit({ password: true });
+export const updateUserDataSchemaRequest = userData
 
 export const updateUserDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
