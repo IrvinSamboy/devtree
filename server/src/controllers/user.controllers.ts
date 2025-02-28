@@ -3,7 +3,9 @@ import { userModel } from "../models/User";
 import { TSchemaBadResponse, TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse } from '../schemas/userSchema';
 import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
-
+import { TsRestRequest } from '@ts-rest/express';
+import { userContract } from '../contracts/userContract';
+import formidable from 'formidable'
 export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
     try {
         const { userName, name, email, password } = ctx.req.body
@@ -167,6 +169,17 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             status: 500,
             body: { message: errorMessage }
         }
+    }
+}
+
+export const uploadImage = async (ctx: {req: TsRestRequest<typeof userContract.uploadImage>}) : Promise<TSigninSchemaResponse> => {
+    const form = formidable({multiples: false})
+    form.parse(ctx.req, (err, fields, files) => {
+        console.log(files)
+    })
+    return{
+        status: 200,
+        body: {message: "message"}
     }
 }
 

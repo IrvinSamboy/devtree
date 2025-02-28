@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupSchemaRequest, SigninSchemaRequest, Message, userData, updateUserDataSchemaRequest  } from '../schemas/userSchema';
+import { SignupSchemaRequest, SigninSchemaRequest, Message, userData, updateUserDataSchemaRequest, uploadImageSchema  } from '../schemas/userSchema';
 
 const c = initContract();
 
@@ -51,6 +51,18 @@ export const userContract = c.router({
             500: Message
         },
         summary: 'update user data'
+    },
+
+    uploadImage: {
+        method: 'POST',
+        path: '/uploadImage',
+        body: uploadImageSchema,
+        responses: {
+            200: Message,
+            401: Message,
+            404: Message,
+            500: Message
+        },
     },
 
     verifyUserSession: {

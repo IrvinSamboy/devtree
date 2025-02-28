@@ -58,6 +58,10 @@ export const updateUserDataSchemaResponse = z.object({
     body: userData.omit({email: true})
 })
 
+export const uploadImageSchema = z.object({
+    file : z.unknown()
+})
+
 export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
 
 export type TSignupSchemaRequest = TsRestRequest<typeof userContract.signup>;
