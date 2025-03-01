@@ -176,7 +176,16 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
     try {
         const form = formidable({ multiples: false })
         form.parse(ctx.req, (err, fields, files) => {
-            console.log(files)
+            if(!files) return {
+                status : 400,
+                body: {message: "File is required"}
+            }
+
+            if(!files.file![0].mimetype?.includes('image')) return {
+                status : 400,
+                body: {message: "You only upload images"}
+            }
+
         })
         return {
             status: 200,
