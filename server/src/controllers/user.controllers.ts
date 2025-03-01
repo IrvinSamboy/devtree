@@ -199,25 +199,21 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
                 body: {message: "You only upload images"}
             }
 
-        cloudinary.uploader.upload(files.file![0].filepath, {}, async (error, result) => {
-            if(error) {
-                return {
-                    status : 500,
-                    body: {message: "Internal server error"}
+        const result = await new Promise<string>((resolve, reject) => {
+            cloudinary.uploader.upload(files.file![0].filepath, {}, async (error, result) => {
+                if(error) {
+                    reject("Error uploading image")
                 }
-            }
-
-            if(result) {
-                return {
-                    status : 200,
-                    body: {message: result.secure_url}
-                }   
-            }
+    
+                if(result) {
+                    resolve(result.secure_url)
+                }
+            })
         })
 
         return {
             status: 200,
-            body: {message: "message"}
+            body: {message: result}
         }
         
     }
