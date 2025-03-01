@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { PositiveStatusSchema, BadStatusSchema } from './statusCodes'
 import { TsRestRequest } from '@ts-rest/express'
 import { userContract } from '../contracts/userContract'
+import { Files } from 'formidable'
 
 export const Message = z.object({
     message: z.string()
@@ -20,8 +21,8 @@ export const SignupSchemaResponse = z.object({
     body: ZUserSchema
 })
 
-export const SchemaBadResponse = z.object({
-    status: BadStatusSchema,
+export const SchemaResponse = z.object({
+    status: BadStatusSchema || PositiveStatusSchema,
     body: Message
 })
 
@@ -59,10 +60,11 @@ export const updateUserDataSchemaResponse = z.object({
 })
 
 export const uploadImageSchema = z.object({
-    file : z.unknown()
+    file : z.custom<Files<string>>()
 })
 
-export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
+
+export type TSchemaResponse = z.infer<typeof SchemaResponse>;
 
 export type TSignupSchemaRequest = TsRestRequest<typeof userContract.signup>;
 export type TSignupSchemaResponse = z.infer<typeof SignupSchemaResponse>
