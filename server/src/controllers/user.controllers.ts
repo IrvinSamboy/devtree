@@ -6,6 +6,7 @@ import { Response } from 'express';
 import { TsRestRequest } from '@ts-rest/express';
 import { userContract } from '../contracts/userContract';
 import formidable, { Files } from 'formidable'
+import cloudinary from '../config/cloudDInaryConfig';
 export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
     try {
         const { userName, name, email, password } = ctx.req.body
@@ -175,6 +176,7 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
         const form = formidable({ multiples: false })
+        
         const files = await new Promise<Files<string>>((resolve, reject) => {
             form.parse(ctx.req, (err, fields, files) => {
                 if(err){ 
@@ -191,11 +193,27 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
                 status : 400,
                 body: {message: "File is required"}
             }
-            
+
         if(!files.file![0].mimetype?.includes('image')) return {
                 status : 400,
                 body: {message: "You only upload images"}
             }
+
+        cloudinary.uploader.upload(files.file![0].filepath, {}, async (error, result) => {
+            if(error) {
+                return {
+                    status : 500,
+                    body: {message: "Internal server error"}
+                }
+            }
+
+            if(result) {
+                return {
+                    status : 200,
+                    body: {message: result.secure_url}
+                }   
+            }
+        })
 
         return {
             status: 200,
