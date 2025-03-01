@@ -91,7 +91,7 @@ export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }):
 
 export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response }): Promise<TUserDataSchemaResponse | TSchemaResponse> => {
     try {
-        const {id} = ctx.req
+        const { id } = ctx.req
 
         const userExits = await userModel.findById(id)
 
@@ -119,9 +119,9 @@ export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response
         }
     }
 }
-export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }) : Promise<TupdateUserDataSchemaResponse | TSchemaResponse> => {
+export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }): Promise<TupdateUserDataSchemaResponse | TSchemaResponse> => {
     try {
-        const {id} = ctx.req
+        const { id } = ctx.req
         const userExits = await userModel.findById(id)
 
         if (!userExits) return {
@@ -129,21 +129,21 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             body: { message: "user not found" }
         }
 
-        const { 
-            userName = userExits.userName, 
-            name = userExits.name, 
-            description = userExits.description 
+        const {
+            userName = userExits.userName,
+            name = userExits.name,
+            description = userExits.description
         } = ctx.req.body
 
-        if(userName !== userExits.userName) {
-            const userNameExits = await userModel.findOne({userName})
-            if(userNameExits) {
+        if (userName !== userExits.userName) {
+            const userNameExits = await userModel.findOne({ userName })
+            if (userNameExits) {
                 return {
                     status: 400,
-                    body: {message: "There is already a user with this name"}
+                    body: { message: "There is already a user with this name" }
                 }
             }
-        } 
+        }
 
         const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, description }, { new: true })
 
@@ -172,14 +172,24 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
     }
 }
 
-export const uploadImage = async (ctx: {req: TsRestRequest<typeof userContract.uploadImage>}) : Promise<TSigninSchemaResponse> => {
-    const form = formidable({multiples: false})
-    form.parse(ctx.req, (err, fields, files) => {
-        console.log(files)
-    })
-    return{
-        status: 200,
-        body: {message: "message"}
+export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaResponse> => {
+    try {
+        const form = formidable({ multiples: false })
+        form.parse(ctx.req, (err, fields, files) => {
+            console.log(files)
+        })
+        return {
+            status: 200,
+            body: { message: "message" }
+        }
+    }
+    catch (e) {
+        const errorMessage = (e as Error).message
+
+        return {
+            status: 500,
+            body: { message: errorMessage }
+        }
     }
 }
 
