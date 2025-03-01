@@ -1,12 +1,12 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { TSchemaResponse, TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse } from '../schemas/userSchema';
+import { TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse, TSchemaGoodResponse, TSchemaBadResponse } from '../schemas/userSchema';
 import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
 import { TsRestRequest } from '@ts-rest/express';
 import { userContract } from '../contracts/userContract';
 import formidable from 'formidable'
-export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaResponse> => {
+export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
     try {
         const { userName, name, email, password } = ctx.req.body
 
@@ -50,7 +50,7 @@ export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignu
     }
 }
 
-export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }): Promise<TSigninSchemaResponse | TSchemaResponse
+export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }): Promise<TSigninSchemaResponse | TSchemaBadResponse
 > => {
     try {
         const { email, password } = ctx.req.body
@@ -89,7 +89,7 @@ export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }):
     }
 }
 
-export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response }): Promise<TUserDataSchemaResponse | TSchemaResponse> => {
+export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response }): Promise<TUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
         const { id } = ctx.req
 
@@ -119,7 +119,7 @@ export const userData = async (ctx: { req: TUserDataSchemaRequest, res: Response
         }
     }
 }
-export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }): Promise<TupdateUserDataSchemaResponse | TSchemaResponse> => {
+export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, res: Response }): Promise<TupdateUserDataSchemaResponse | TSchemaBadResponse> => {
     try {
         const { id } = ctx.req
         const userExits = await userModel.findById(id)
@@ -172,7 +172,7 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
     }
 }
 
-export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaResponse> => {
+export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
         const form = formidable({ multiples: false })
         form.parse(ctx.req, (err, fields, files) => {

@@ -21,8 +21,13 @@ export const SignupSchemaResponse = z.object({
     body: ZUserSchema
 })
 
-export const SchemaResponse = z.object({
-    status: BadStatusSchema || PositiveStatusSchema,
+export const SchemaBadResponse = z.object({
+    status: BadStatusSchema,
+    body: Message
+})
+
+export const SchemaGoodResponse = z.object({
+    status: PositiveStatusSchema,
     body: Message
 })
 
@@ -64,7 +69,8 @@ export const uploadImageSchema = z.object({
 })
 
 
-export type TSchemaResponse = z.infer<typeof SchemaResponse>;
+export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;
+export type TSchemaGoodResponse = z.infer<typeof SchemaGoodResponse>;
 
 export type TSignupSchemaRequest = TsRestRequest<typeof userContract.signup>;
 export type TSignupSchemaResponse = z.infer<typeof SignupSchemaResponse>
