@@ -175,6 +175,15 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 
 export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
+        const {id} = ctx.req
+
+        const userExits = await userModel.findById(id)
+
+        if(!userExits) return {
+            status: 404,
+            body: {message: "Error validating user"}
+        }
+
         const form = formidable({ multiples: false })
         
         const files = await new Promise<Files<string>>((resolve, reject) => {
@@ -210,6 +219,10 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
                 }
             })
         })
+
+        userExits.image = result
+
+        await userExits.save()
 
         return {
             status: 200,
