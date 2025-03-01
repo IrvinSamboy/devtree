@@ -5,7 +5,7 @@ import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
 import { TsRestRequest } from '@ts-rest/express';
 import { userContract } from '../contracts/userContract';
-import formidable from 'formidable'
+import formidable, { Files } from 'formidable'
 export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
     try {
         const { userName, name, email, password } = ctx.req.body
@@ -175,22 +175,33 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
         const form = formidable({ multiples: false })
-        form.parse(ctx.req, (err, fields, files) => {
-            if(!files) return {
+        const files = await new Promise<Files<string>>((resolve, reject) => {
+            form.parse(ctx.req, (err, fields, files) => {
+                if(err){ 
+                    reject(err)
+                }
+                else {
+                    resolve(files)
+                }
+                
+            })
+        })
+      
+        if(!files) return{
                 status : 400,
                 body: {message: "File is required"}
             }
-
-            if(!files.file![0].mimetype?.includes('image')) return {
+            
+        if(!files.file![0].mimetype?.includes('image')) return {
                 status : 400,
                 body: {message: "You only upload images"}
             }
 
-        })
         return {
             status: 200,
-            body: { message: "message" }
+            body: {message: "message"}
         }
+        
     }
     catch (e) {
         const errorMessage = (e as Error).message
