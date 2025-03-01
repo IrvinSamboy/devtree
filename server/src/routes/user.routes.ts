@@ -20,7 +20,12 @@ export const userRoutes = s.router(userContract, {
         ],
         handler: updateUserData
     },
-    uploadImage : uploadImage,
+    uploadImage : {
+        middleware: [
+            verifySessionToken
+        ],
+        handler: uploadImage
+    },
     verifyUserSession: {
         middleware: [
             verifySessionToken
