@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 export default function RootLayout() {
   return (
-    <div className=" h-screen w-screen">
+    <div className="w-screen pb-10">      
       <Outlet />
     </div>
   )
