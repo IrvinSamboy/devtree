@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Input from "../../../components/ui/Input"
-import { useUpdateUserData, useUserData } from "../../../providers/User"
+import { useUpdateUserData, useUploadImage, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
 import { useForm, Controller } from "react-hook-form"
@@ -14,9 +14,24 @@ export default function ProfileView() {
 
   const [fileErr, serFileErr] = useState(false)
 
+  const fileObj = useRef<File>()
+
   const { data: userData, isError, isLoading, refetch } = useUserData()
 
   const { mutate: updateUserData, isLoading: isLoadingUpdate } = useUpdateUserData()
+
+  const {mutate: uploadImage, isLoading: isLoadingUpload} = useUploadImage()
+
+  const handleUploadImage = () => {
+    uploadImage(fileObj, {
+      onSuccess: () => {
+        toast("Image uploaded correctly")
+      },
+      onError: (response) => {
+        toast(response.response?.data.message)
+      }
+    })
+  }
 
   const defaultValues = {
     userName: '',
@@ -57,12 +72,12 @@ export default function ProfileView() {
 
   const fileValidator = (file: File) => {
     if(!file.type.includes("image")) {
-      console.log("ddddddddddd")
       serFileErr(true)
     }
     else if(file) {
       setFIleURL(URL.createObjectURL(file))
       serFileErr(false)
+      fileObj.current = file
     }
   }
 
