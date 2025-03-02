@@ -33,9 +33,9 @@ export const useUpdateUserData = () => {
 export const useUploadImage = () => {
     return useMutation<MessageT, AxiosError<MessageT>, uploadImage>({
         mutationKey: ["uploadImage"],
-        mutationFn: async (fileData : File) => {
+        mutationFn: async (data) => {
             const formData = new FormData()
-            formData.append("file", fileData)
+            formData.append("file", data.file)
             const response = await apiDevTree.post(apiDevTreeEndPoints.user.uploadImage, {
                 formData
             })

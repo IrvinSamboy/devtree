@@ -9,5 +9,5 @@ export type MessageT = {
 }
 
 export type uploadImage = {
-    file: FormData
+    file: File
 }
