@@ -158,7 +158,9 @@ export default function ProfileView() {
                     }
                     </p>
                   <img hidden={!fileURL} src={fileURL} alt="" className="size-[50%] mt-5" />
-                  <Button styles={`!bg-emerald-green mt-5 !w-1/2 ${!fileURL&& "hidden"}`}>
+                  <Button 
+                    onClick={handleUploadImage}
+                    styles={`!bg-emerald-green mt-5 !w-1/2 ${!fileURL&& "hidden"}`}>
                     Upload image
                   </Button>
                 </div>
