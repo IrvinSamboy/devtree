@@ -52,7 +52,12 @@ export default function ProfileView() {
 
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
-    console.log("drop")
+    const droppedFiles = e.dataTransfer.files;
+    const file = droppedFiles[0]
+    if(file) {
+      setFIle(URL.createObjectURL(file))
+    }
+    setDrag(false)
   }
   const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -114,11 +119,12 @@ export default function ProfileView() {
               </div>
               <div className="space-y-1">
                 <p>Image</p>
-                <div className={`py-10 px-4 border-mid-purple border rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
+                <div className={`py-10 px-4 border-mid-purple border flex items-center justify-center flex-col rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
                   <p className="text-center text-xl text-gray-500">Drag a image here to upload or <br /><span className="cursor-pointer text-lg border-b" onClick={clickFileInput}>CLick here to browse</span></p>
+                  <img src={file} alt="" className="size-[50%] mt-5" />
+
                 </div>
                 <input type="file" multiple={false} onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
-                <img src={file} alt="" />
               </div>
               <Button
                 disabled={isLoading}
