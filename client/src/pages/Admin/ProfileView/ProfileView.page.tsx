@@ -164,7 +164,7 @@ export default function ProfileView() {
                   <Button 
                     onClick={handleUploadImage}
                     type="button"
-                    disabled={!fileURL || isLoading}
+                    disabled={!fileURL || isLoadingUpload}
                     styles={`!bg-emerald-green mt-5 !w-1/2 ${!fileURL&& "hidden"}`}>
                     {isLoadingUpload ? <Loader styles="border-white !p-2" /> : "Upload image"}
                   </Button>
@@ -172,7 +172,7 @@ export default function ProfileView() {
                 <input type="file" multiple={false} accept="image/*" onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
               </div>
               <Button
-                disabled={isLoading}
+                disabled={isLoading || isLoadingUpdate}
               >
                 {isLoadingUpdate ? <Loader styles="border-white !p-2" /> : "Send"}
               </Button>
