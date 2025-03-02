@@ -6,6 +6,7 @@ export const apiDevTreeEndPoints = {
     },
     user: {
         userData: '/userData',
-        updateUserDAta: '/updateUserData'
+        updateUserDAta: '/updateUserData',
+        uploadImage: '/uploadImage'
     }
 }
