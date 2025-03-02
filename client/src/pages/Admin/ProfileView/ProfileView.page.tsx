@@ -10,7 +10,9 @@ export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
 
-  const [file, setFIle] = useState("")
+  const [fileURL, setFIleURL] = useState("")
+
+  const [fileErr, serFileErr] = useState(false)
 
   const { data: userData, isError, isLoading, refetch } = useUserData()
 
@@ -48,15 +50,27 @@ export default function ProfileView() {
     })
   }
 
+
+  useEffect(() => console.log(fileURL), [fileURL])
+
   const fileInput = useRef<HTMLInputElement>(null)
+
+  const fileValidator = (file: File) => {
+    if(!file.type.includes("image")) {
+      console.log("ddddddddddd")
+      serFileErr(true)
+    }
+    else if(file) {
+      setFIleURL(URL.createObjectURL(file))
+      serFileErr(false)
+    }
+  }
 
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     const droppedFiles = e.dataTransfer.files;
     const file = droppedFiles[0]
-    if(file) {
-      setFIle(URL.createObjectURL(file))
-    }
+    fileValidator(file)
     setDrag(false)
   }
   const handleOnDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -74,9 +88,7 @@ export default function ProfileView() {
 
   const onChangeFileInput = (e : React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0]
-    if(file) {
-      setFIle(URL.createObjectURL(file))
-    }
+    fileValidator(file)
   }
 
   return (
@@ -120,11 +132,20 @@ export default function ProfileView() {
               <div className="space-y-1">
                 <p>Image</p>
                 <div className={`py-10 px-4 border-mid-purple border flex items-center justify-center flex-col rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
-                  <p className="text-center text-xl text-gray-500">Drag a image here to upload or <br /><span className="cursor-pointer text-lg border-b" onClick={clickFileInput}>CLick here to browse</span></p>
-                  <img src={file} alt="" className="size-[50%] mt-5" />
+                  <p className="text-center text-xl text-gray-500">
+                    Drag a image here to upload or <br />
+                    <span className="cursor-pointer text-lg border-b" onClick={clickFileInput}>CLick here to browse</span>
+                    {fileErr&&
+                      <>
+                        <br />
+                        <span className="text-center text-base text-red-500">Invalid file type, only accept image</span>
+                      </>
+                    }
+                    </p>
+                  <img hidden={!fileURL} src={fileURL} alt="" className="size-[50%] mt-5" />
 
                 </div>
-                <input type="file" multiple={false} onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
+                <input type="file" multiple={false} accept="image/*" onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
               </div>
               <Button
                 disabled={isLoading}
