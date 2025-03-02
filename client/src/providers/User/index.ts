@@ -1,6 +1,6 @@
 import { apiDevTreeEndPoints } from "../endPoints";
 import { useMutation, useQuery } from "react-query";
-import { userData, MessageT, updateUserDataPayload } from "./user.interface";
+import { userData, MessageT, updateUserDataPayload, uploadImage } from "./user.interface";
 import { apiDevTree } from "../apiClient";
 import { AxiosError } from "axios";
 
@@ -24,6 +24,21 @@ export const useUpdateUserData = () => {
                 description: data.description
             }
         )
+
+            return response.data
+        }
+    })
+}
+
+export const useUploadImage = () => {
+    return useMutation<MessageT, AxiosError<MessageT>, uploadImage>({
+        mutationKey: ["uploadImage"],
+        mutationFn: async (fileData : File) => {
+            const formData = new FormData()
+            formData.append("file", fileData)
+            const response = await apiDevTree.post(apiDevTreeEndPoints.user.uploadImage, {
+                formData
+            })
 
             return response.data
         }
