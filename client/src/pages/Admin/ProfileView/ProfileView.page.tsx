@@ -23,14 +23,17 @@ export default function ProfileView() {
   const {mutate: uploadImage, isLoading: isLoadingUpload} = useUploadImage()
 
   const handleUploadImage = () => {
-    uploadImage(fileObj, {
-      onSuccess: () => {
-        toast("Image uploaded correctly")
-      },
-      onError: (response) => {
-        toast(response.response?.data.message)
-      }
-    })
+    if(fileObj.current) {
+      uploadImage({file : fileObj.current}, {
+        onSuccess: () => {
+          toast("Image uploaded correctly")
+        },
+        onError: (response) => {
+          toast(response.response?.data.message)
+        }
+      })
+    }
+    
   }
 
   const defaultValues = {
