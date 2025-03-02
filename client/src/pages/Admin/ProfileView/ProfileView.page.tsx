@@ -10,6 +10,8 @@ export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
 
+  const [file, setFIle] = useState("")
+
   const { data: userData, isError, isLoading, refetch } = useUserData()
 
   const { mutate: updateUserData, isLoading: isLoadingUpdate } = useUpdateUserData()
@@ -65,6 +67,13 @@ export default function ProfileView() {
     fileInput.current?.click()
   }
 
+  const onChangeFileInput = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0]
+    if(file) {
+      setFIle(URL.createObjectURL(file))
+    }
+  }
+
   return (
 
     <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -108,7 +117,8 @@ export default function ProfileView() {
                 <div className={`py-10 px-4 border-mid-purple border rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
                   <p className="text-center text-xl text-gray-500">Drag a image here to upload or <br /><span className="cursor-pointer text-lg border-b" onClick={clickFileInput}>CLick here to browse</span></p>
                 </div>
-                <input type="file" hidden={true} ref={fileInput}/>
+                <input type="file" multiple={false} onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
+                <img src={file} alt="" />
               </div>
               <Button
                 disabled={isLoading}
