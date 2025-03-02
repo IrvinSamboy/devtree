@@ -36,9 +36,7 @@ export const useUploadImage = () => {
         mutationFn: async (data) => {
             const formData = new FormData()
             formData.append("file", data.file)
-            const response = await apiDevTree.post(apiDevTreeEndPoints.user.uploadImage, {
-                formData
-            })
+            const response = await apiDevTree.post(apiDevTreeEndPoints.user.uploadImage, formData)
 
             return response.data
         }
