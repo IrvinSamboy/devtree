@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Input from "../../../components/ui/Input"
 import { useUpdateUserData, useUserData } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
@@ -46,6 +46,8 @@ export default function ProfileView() {
     })
   }
 
+  const fileInput = useRef<HTMLInputElement>(null)
+
   const handleOnDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     console.log("drop")
@@ -58,6 +60,11 @@ export default function ProfileView() {
     e.preventDefault()
     setDrag(false)
   }
+
+  const clickFileInput = () => {
+    fileInput.current?.click()
+  }
+
   return (
 
     <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -99,8 +106,9 @@ export default function ProfileView() {
               <div className="space-y-1">
                 <p>Image</p>
                 <div className={`py-10 px-4 border-mid-purple border rounded-lg ${drag && 'bg-mid-purple/50'}`} onDragLeave={handleOnDragEnd} onDragOver={handleOnDragOver} onDrop={handleOnDrop}>
-                  <p className="text-center text-xl text-gray-500">Drag a image here to upload or <br /><span className="text-lg border-b ">CLick here to browse</span></p>
+                  <p className="text-center text-xl text-gray-500">Drag a image here to upload or <br /><span className="cursor-pointer text-lg border-b" onClick={clickFileInput}>CLick here to browse</span></p>
                 </div>
+                <input type="file" hidden={true} ref={fileInput}/>
               </div>
               <Button
                 disabled={isLoading}
