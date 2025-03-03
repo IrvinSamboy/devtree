@@ -4,6 +4,7 @@ export interface UserI {
     email: string;
     password: string;
     description: string;
+    image: string;
 }
 
 export type InputsSigninT = Omit<UserI, "username" | "name"> 

@@ -6,10 +6,11 @@ import TabElement from "./components/TabElement"
 import { useUserData } from "../../../providers/User"
 import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
+import Loader from "../../utils/Loader"
 
 export default function AppLayout() {
 
-const {data : userData, isLoading, refetch, isError} = useUserData()
+const {data : userData, isLoading, refetch} = useUserData()
 
 const location = useLocation()
 
@@ -19,7 +20,11 @@ useEffect(() => {
     }
 }, [location.pathname])
 
-return (
+if(isLoading) {
+    return <Loader />
+}
+
+return (   
     <div className="space-y-5">
         <header className="bg-white p-2 w-full shadow-2xl">
            <div className="flex justify-between max-w-[90%] mx-auto">
@@ -50,7 +55,9 @@ return (
             <section className="space-y-3">
                 <h2 className="text-xl font-semibold">Visit my profile</h2>
                 <div className="bg-emerald-green p-4">
-                    
+                    {userData?.image&&
+                        <img src={userData.image} alt="" />
+                    }
                 </div>
             </section>
         </main>
