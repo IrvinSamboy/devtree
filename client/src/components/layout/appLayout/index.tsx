@@ -3,8 +3,21 @@ import { Outlet } from "react-router-dom"
 import Logo from "../../utils/Logo"
 import { Link, User } from "lucide-react"
 import TabElement from "./components/TabElement"
+import { useUserData } from "../../../providers/User"
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
 export default function AppLayout() {
+
+const {data : userData, isLoading, refetch, isError} = useUserData()
+
+const location = useLocation()
+
+useEffect(() => {
+    if(location.pathname === '/admin/profile') {
+        refetch()
+    }
+}, [location.pathname])
 
 return (
     <div className="space-y-5">
@@ -37,7 +50,7 @@ return (
             <section className="space-y-3">
                 <h2 className="text-xl font-semibold">Visit my profile</h2>
                 <div className="bg-emerald-green p-4">
-
+                    
                 </div>
             </section>
         </main>
