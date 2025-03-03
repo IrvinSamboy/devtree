@@ -10,7 +10,7 @@ import Loader from "../../utils/Loader"
 
 export default function AppLayout() {
 
-const {data : userData, isLoading, refetch} = useUserData()
+const {data : userData, isLoading, refetch, isError} = useUserData()
 
 const location = useLocation()
 
@@ -22,6 +22,10 @@ useEffect(() => {
 
 if(isLoading) {
     return <Loader />
+}
+
+else if(isError) {
+    return <p>ERROR</p>
 }
 
 return (   

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import Input from "../../../components/ui/Input"
-import { useUpdateUserData, useUploadImage, useUserData } from "../../../providers/User"
+import { useUpdateUserData, useUploadImage } from "../../../providers/User"
 import Loader from "../../../components/utils/Loader"
 import Button from "../../../components/ui/Button"
 import { useForm, Controller } from "react-hook-form"
 import { updateUserDataPayload } from "../../../providers/User/user.interface"
 import { toast } from "react-toastify"
+import { useQueryClient } from "react-query"
+import { userData as TuserData } from "../../../providers/User/user.interface"
 export default function ProfileView() {
 
   const [drag, setDrag] = useState(false)
@@ -16,7 +18,9 @@ export default function ProfileView() {
 
   const fileObj = useRef<File>()
 
-  const { data: userData, isError, isLoading, refetch } = useUserData()
+  const queryClient = useQueryClient()
+
+  const userData = queryClient.getQueryData<TuserData>(["userDatta"])
 
   const { mutate: updateUserData, isLoading: isLoadingUpdate } = useUpdateUserData()
 
@@ -60,7 +64,7 @@ export default function ProfileView() {
     updateUserData(data, {
       onSuccess: () => {
         toast("User data updated")
-        refetch()
+        queryClient.refetchQueries("userData")
       },
       onError: (response) => {
         toast(response.response?.data.message || "Internal server error")
@@ -112,12 +116,6 @@ export default function ProfileView() {
   return (
 
     <div className="bg-white p-4 rounded-lg shadow-lg">
-      {isLoading ?
-        <Loader />
-        :
-        isError ?
-          <p>ERROR</p>
-          :
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="text-center text-xl font-semibold">Edit information</h2>
             <div className="space-y-2">
@@ -172,13 +170,12 @@ export default function ProfileView() {
                 <input type="file" multiple={false} accept="image/*" onChange={onChangeFileInput} hidden={true} ref={fileInput}/>
               </div>
               <Button
-                disabled={isLoading || isLoadingUpdate}
+                disabled={isLoadingUpdate}
               >
                 {isLoadingUpdate ? <Loader styles="border-white !p-2" /> : "Send"}
               </Button>
             </div>
           </form>
-      }
     </div>
   )
 }
