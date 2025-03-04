@@ -20,7 +20,7 @@ export default function ProfileView() {
 
   const queryClient = useQueryClient()
 
-  const userData = queryClient.getQueryData<TuserData>(["userDatta"])
+  const userData = queryClient.getQueryData<TuserData>(["userData"])
 
   const { mutate: updateUserData, isLoading: isLoadingUpdate } = useUpdateUserData()
 
