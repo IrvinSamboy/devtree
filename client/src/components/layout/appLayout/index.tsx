@@ -38,7 +38,7 @@ return (
                 </button>
            </div>
         </header>
-        <main className="grid grid-cols-2 gap-3 max-w-[90%] mx-auto">
+        <main className="grid grid-cols-[3fr_2fr] gap-3 max-w-[90%] mx-auto">
             <section className="space-y-4">
                 <div className="flex text-black items-center gap-10">
                     <TabElement 
@@ -57,11 +57,15 @@ return (
                 <Outlet />
             </section>
             <section className="space-y-3">
-                <h2 className="text-xl font-semibold">Visit my profile</h2>
-                <div className="bg-emerald-green p-4">
-                    {userData?.image&&
-                        <img src={userData.image} alt="" />
-                    }
+                <h2 className="text-xl font-semibold">Visit my profile/{userData?.userName}</h2>
+                <div className="bg-emerald-green text-center p-4 text-white">
+                    <div className="flex items-center justify-center flex-col space-y-4">
+                        <p className="text-3xl font-bold">{userData?.userName}</p>
+                        {userData?.image&&
+                            <img src={userData.image} className="max-w-60" alt="" />
+                        }
+                        <p className="text-xl font-semibold">{userData?.description}</p>
+                    </div>
                 </div>
             </section>
         </main>
