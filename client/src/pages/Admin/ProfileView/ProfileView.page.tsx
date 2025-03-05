@@ -29,8 +29,12 @@ export default function ProfileView() {
   const handleUploadImage = () => {
     if(fileObj.current) {
       uploadImage({file : fileObj.current}, {
-        onSuccess: () => {
+        onSuccess: (response) => {
           toast("Image uploaded correctly")
+          queryClient.setQueryData<TuserData>("userData", {
+            ...userData!,
+            image: response.message
+          })
         },
         onError: (response) => {
           toast(response.response?.data.message)
@@ -64,7 +68,7 @@ export default function ProfileView() {
     updateUserData(data, {
       onSuccess: () => {
         toast("User data updated")
-        queryClient.refetchQueries("userData")
+        queryClient.setQueryData<updateUserDataPayload>("userData", {...data})
       },
       onError: (response) => {
         toast(response.response?.data.message || "Internal server error")
