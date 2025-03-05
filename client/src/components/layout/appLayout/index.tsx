@@ -58,13 +58,24 @@ return (
             </section>
             <section className="space-y-3">
                 <h2 className="text-xl font-semibold">Visit my profile/{userData?.userName}</h2>
-                <div className="bg-emerald-green text-center p-4 text-white">
-                    <div className="flex items-center justify-center flex-col space-y-4">
-                        <p className="text-3xl font-bold">{userData?.userName}</p>
-                        {userData?.image&&
-                            <img src={userData.image} className="max-w-60" alt="" />
-                        }
-                        <p className="text-xl font-semibold">{userData?.description}</p>
+                <div className="p-4 text-gray-500">
+                    <div className="bg-gradient-to-r from-emerald-500 to-teal-400 w-full h-32 rounded-t-lg"></div>
+                    <div className="px-4 py-8 border-gray-300 border border-t-0 space-y-4">
+                        <div className="flex gap-4 items-center">
+                            <div>
+                                {userData?.image?
+                                    <img src={userData.image} className="max-w-28 rounded-full" alt="" />
+                                    :
+                                    <div className="size-28 rounded-full bg-gray-200"></div>
+                                }
+                            </div>
+                            <div>
+                                <p className="text-2xl font-semibold">{userData?.name}</p>
+                                <p className="text-lg">{userData?.userName}</p>
+                            </div>
+                        </div>
+                        <p className="text-xl">{userData?.description}</p>
+
                     </div>
                 </div>
             </section>
