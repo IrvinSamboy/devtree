@@ -11,6 +11,10 @@ export default function DevTreeView() {
     setSocialMediaLink(socialMediaLink.map(item => item.name === e.target.name? {...item, url: e.target.value } : item))
   }
 
+  const handleChangeStatus = (itemName : string) => {
+    setSocialMediaLink(socialMediaLink.map(item => item.name === itemName? {...item, enabled: !item.enabled} : item))
+  }
+
   return (
     <div className="space-y-6">
         {
@@ -25,7 +29,7 @@ export default function DevTreeView() {
                 className="w-full border border-gray-300 p-2 rounded-lg outline-0" />
               <Switch
                   checked={item.enabled}
-                  onChange={() => {}}
+                  onChange={() => handleChangeStatus(item.name)}
                   className={`${item.enabled ? 'bg-blue-500' : 'bg-gray-200'} relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
               >
                   <span
