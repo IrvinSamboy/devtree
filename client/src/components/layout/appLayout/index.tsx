@@ -5,20 +5,15 @@ import { Link, User } from "lucide-react"
 import TabElement from "./components/TabElement"
 import { useUserData } from "../../../providers/User"
 import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
 import Loader from "../../utils/Loader"
 
 export default function AppLayout() {
 
 const {data : userData, isLoading, refetch, isError} = useUserData()
 
-const location = useLocation()
-
 useEffect(() => {
-    if(location.pathname === '/admin/profile') {
-        refetch()
-    }
-}, [location.pathname])
+    refetch()
+}, [])
 
 if(isLoading) {
     return <Loader />
