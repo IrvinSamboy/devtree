@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { social } from "../../../data/social"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
@@ -7,13 +7,22 @@ export default function DevTreeView() {
   
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
 
+  const handleCHangeURL = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setSocialMediaLink(socialMediaLink.map(item => item.name === e.target.name? {...item, url: e.target.value } : item))
+  }
+
   return (
     <div className="space-y-6">
         {
           socialMediaLink.map((item) => (
             <div className="flex gap-3 items-center bg-white p-4 shadow-md rounded-lg">
               <img src={`../../../../public/social/icon_${item.name}.svg`} className="max-w-14" alt="" />
-              <input type="text" className="w-full border border-gray-300 p-2 rounded-lg outline-0" />
+              <input 
+                name={item.name}
+                onChange={handleCHangeURL}
+                type="text" 
+                value={item.url}
+                className="w-full border border-gray-300 p-2 rounded-lg outline-0" />
               <Switch
                   checked={item.enabled}
                   onChange={() => {}}
