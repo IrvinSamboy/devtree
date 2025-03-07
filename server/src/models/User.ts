@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
     image: {
         type: String,
         default: ""
+    },
+    socialMediaUrls: {
+        type: String,
+        default: ""
     }
 }, {timestamps: true})
 

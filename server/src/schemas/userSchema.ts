@@ -14,7 +14,8 @@ export const ZUserSchema = z.object({
     email: z.string().regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {message: "Invalid email address"}),
     password: z.string().nonempty({message: "Password is required"}),
     description: z.string().optional(),
-    image: z.string().optional()
+    image: z.string().optional(),
+    socialMediaUrls: z.string().optional()
 })
 
 export const SignupSchemaResponse = z.object({

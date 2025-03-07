@@ -134,7 +134,8 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
         const {
             userName = userExits.userName,
             name = userExits.name,
-            description = userExits.description
+            description = userExits.description,
+            socialMediaUrls = userExits.socialMediaUrls
         } = ctx.req.body
 
         if (userName !== userExits.userName) {
@@ -147,7 +148,7 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             }
         }
 
-        const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, description }, { new: true })
+        const userUpdated = await userModel.findByIdAndUpdate(id, { userName, name, description, socialMediaUrls }, { new: true })
 
         if (!userUpdated) return {
             status: 400,
@@ -159,7 +160,8 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
             body: {
                 userName: userUpdated.userName,
                 name: userUpdated.name,
-                description: userUpdated.description
+                description: userUpdated.description,
+                socialMediaUrls: userUpdated.socialMediaUrls
             }
         }
 
