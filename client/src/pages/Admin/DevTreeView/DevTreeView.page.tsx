@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import { social } from "../../../data/social"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
+import { validateUrl } from "../../../components/utils/utils"
+import Button from "../../../components/ui/Button"
+import { toast } from "react-toastify"
 
 export default function DevTreeView() {
   
@@ -13,6 +16,16 @@ export default function DevTreeView() {
 
   const handleChangeStatus = (itemName : string) => {
     setSocialMediaLink(socialMediaLink.map(item => item.name === itemName? {...item, enabled: !item.enabled} : item))
+  }
+
+  const handleSubmit = () => {
+    for(const item of socialMediaLink) {
+      if(item.url){
+        if(!validateUrl(item.url)) {
+          toast(`${item.name} has invalid url`)
+        }
+      }
+    }
   }
 
   return (
@@ -39,7 +52,12 @@ export default function DevTreeView() {
               </Switch>
             </div>
           ))
-        }  
+        } 
+        <Button
+          onClick={handleSubmit}
+        >
+          Save changes
+        </Button>
     </div>
   )
 }
