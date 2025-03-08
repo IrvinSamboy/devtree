@@ -5,10 +5,19 @@ import { Switch } from '@headlessui/react'
 import { validateUrl } from "../../../components/utils/utils"
 import Button from "../../../components/ui/Button"
 import { toast } from "react-toastify"
+import { useQueryClient } from "react-query"
+import { useUpdateUserData } from "../../../providers/User"
+import { userData as TuserData } from "../../../providers/User/user.interface"
 
 export default function DevTreeView() {
   
+  const queryClient = useQueryClient()
+
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
+
+  const userData : TuserData = queryClient.getQueryData(["userData"])!
+
+  const {mutate: updateUserData, isLoading } = useUpdateUserData()
 
   const handleCHangeURL = (e : React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => item.name === e.target.name? {...item, url: e.target.value } : item))
@@ -19,13 +28,23 @@ export default function DevTreeView() {
   }
 
   const handleSubmit = () => {
+    let error = false
     for(const item of socialMediaLink) {
       if(item.url){
         if(!validateUrl(item.url)) {
           toast(`${item.name} has invalid url`)
+          error = true
         }
       }
     }
+
+    if(!error){
+      updateUserData({
+        ...userData,
+        socialMediaUrls:  JSON.stringify(socialMediaLink)
+      })
+    }
+
   }
 
   return (
