@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 import { useQueryClient } from "react-query"
 import { useUpdateUserData } from "../../../providers/User"
 import { userData as TuserData } from "../../../providers/User/user.interface"
+import Loader from "../../../components/utils/Loader"
 
 export default function DevTreeView() {
   
@@ -42,7 +43,16 @@ export default function DevTreeView() {
       updateUserData({
         ...userData,
         socialMediaUrls: JSON.stringify(socialMediaLink)
-      })
+        },
+        {
+          onSuccess: () => {
+            toast("Social medias updated correctly")
+          },
+          onError: (response) => {
+            toast(response.response?.data.message || "Internal server error")
+          }
+        }
+      )
     }
 
   }
@@ -74,8 +84,9 @@ export default function DevTreeView() {
         } 
         <Button
           onClick={handleSubmit}
+          disabled={isLoading}
         >
-          Save changes
+          {isLoading? <Loader styles="border-white !p-2" /> : "Save changes"}
         </Button>
     </div>
   )
