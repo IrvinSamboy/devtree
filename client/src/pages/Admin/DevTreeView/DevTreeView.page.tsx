@@ -41,7 +41,7 @@ export default function DevTreeView() {
     if(!error){
       updateUserData({
         ...userData,
-        socialMediaUrls:  JSON.stringify(socialMediaLink)
+        socialMediaUrls: JSON.stringify(socialMediaLink)
       })
     }
 

@@ -22,7 +22,8 @@ export const useUpdateUserData = () => {
             const response = await apiDevTree.put(apiDevTreeEndPoints.user.updateUserDAta, {
                 userName: data.userName,
                 name: data.name,
-                description: data.description
+                description: data.description,
+                socialMediaUrls: data.socialMediaUrls
             }
         )
 
