@@ -58,11 +58,11 @@ export default function DevTreeView() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-full">
         {
           socialMediaLink.map((item) => (
-            <div className="flex gap-3 items-center bg-white p-4 shadow-md rounded-lg">
-              <img src={`../../../../public/social/icon_${item.name}.svg`} className="max-w-14" alt="" />
+            <div className="flex gap-3 items-center bg-white px-4 py-2 shadow-md rounded-lg">
+              <img src={`../../../../public/social/icon_${item.name}.svg`} className="max-w-10" alt="" />
               <input 
                 name={item.name}
                 onChange={handleCHangeURL}
