@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { ZUserSchema } from "../schemas/userSchema";
-import z from "zod";
+import z, { string } from "zod";
 
 type TUser = z.infer<typeof ZUserSchema>
 
@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
         default: ""
     },
     image: {
+        type: String,
+        default: ""
+    },
+    coverImage: {
         type: String,
         default: ""
     },
