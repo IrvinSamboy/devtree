@@ -15,8 +15,8 @@ export default function TabElement({ children, tabName, path } : TabElementProps
     return (
         <div
             onClick={() => navigate(path)}
-            className={`flex gap-3 items-center py-2 hover:text-mid-purple cursor-pointer border-b-2 
-    ${location.pathname === path ? 'text-mid-purple' : 'border-transparent'}`}
+            className={`flex gap-3 items-center cursor-pointer px-4 py-1 rounded-lg
+            ${location.pathname === path ? 'text-black bg-white' : 'text-gray-500'}`}
         >
             {children}
             <p>{tabName}</p>
