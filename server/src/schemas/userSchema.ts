@@ -15,7 +15,8 @@ export const ZUserSchema = z.object({
     password: z.string().nonempty({message: "Password is required"}),
     description: z.string().optional(),
     image: z.string().optional(),
-    socialMediaUrls: z.string().optional()
+    socialMediaUrls: z.string().optional(),
+    coverImage: z.string().optional()
 })
 
 export const SignupSchemaResponse = z.object({
@@ -67,6 +68,7 @@ export const updateUserDataSchemaResponse = z.object({
 })
 
 export const uploadImageSchema = z.object({
+    type: z.enum(["profile", "cover"]),
     file : z.custom<Files<string>>()
 })
 

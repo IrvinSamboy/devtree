@@ -179,6 +179,23 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
         const {id} = ctx.req
+        const {type} = ctx.req.body
+
+        if(!type){
+            return {
+                    status: 400,
+                    body: {message: "You need provide type"}
+                }
+        } 
+
+        const typeLower = type.toLowerCase()
+
+        if(typeLower !== "profile" && typeLower !== "cover") {
+            return {
+                    status: 400,
+                    body: {message: "Type must be 'profile' or 'cover' "}
+                }
+        }
 
         const userExits = await userModel.findById(id)
 
@@ -222,8 +239,8 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
                 }
             })
         })
-
-        userExits.image = result
+        
+        userExits[type === 'profile'? "image": "coverImage"] = result
 
         await userExits.save()
 
