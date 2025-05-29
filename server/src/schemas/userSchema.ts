@@ -68,9 +68,9 @@ export const updateUserDataSchemaResponse = z.object({
 })
 
 export const uploadImageSchema = z.object({
-    type: z.enum(["profile", "cover"]),
-    file : z.custom<Files<string>>()
-})
+    type: z.enum(["profile", "cover"]).optional(),
+    file : z.custom<Files<string>>().optional()
+}).passthrough()
 
 
 export type TSchemaBadResponse = z.infer<typeof SchemaBadResponse>;

@@ -5,8 +5,9 @@ import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
 import { TsRestRequest } from '@ts-rest/express';
 import { userContract } from '../contracts/userContract';
-import formidable, { Files } from 'formidable'
+import formidable, { Fields, Files } from 'formidable'
 import cloudinary from '../config/cloudDInaryConfig';
+import z from 'zod';
 export const signup = async (ctx: { req: TSignupSchemaRequest }): Promise<TSignupSchemaResponse | TSchemaBadResponse> => {
     try {
         const { userName, name, email, password } = ctx.req.body
@@ -178,24 +179,10 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
 
 export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.uploadImage> }): Promise<TSchemaGoodResponse | TSchemaBadResponse> => {
     try {
+        const typeEnum = z.enum(["profile", "cover"])
+        
+        
         const {id} = ctx.req
-        const {type} = ctx.req.body
-
-        if(!type){
-            return {
-                    status: 400,
-                    body: {message: "You need provide type"}
-                }
-        } 
-
-        const typeLower = type.toLowerCase()
-
-        if(typeLower !== "profile" && typeLower !== "cover") {
-            return {
-                    status: 400,
-                    body: {message: "Type must be 'profile' or 'cover' "}
-                }
-        }
 
         const userExits = await userModel.findById(id)
 
@@ -206,22 +193,28 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
 
         const form = formidable({ multiples: false })
         
-        const files = await new Promise<Files<string>>((resolve, reject) => {
+        const {fields, files} = await new Promise<{
+            fields: Fields<string>,
+            files: Files<string>
+        }>((resolve, reject) => {
             form.parse(ctx.req, (err, fields, files) => {
                 if(err){ 
                     reject(err)
                 }
                 else {
-                    resolve(files)
+                    resolve({fields, files})
                 }
                 
             })
         })
-      
-        if(!files) return{
+
+        if(Object.keys(fields).length === 0 || !files) return{
                 status : 400,
-                body: {message: "File is required"}
-            }
+                body: {message: "File or type is required"}
+        }
+        const type = fields.type? fields.type[0].toLocaleLowerCase() : ""
+        
+        typeEnum.parse(type)
 
         if(!files.file![0].mimetype?.includes('image')) return {
                 status : 400,
@@ -239,7 +232,7 @@ export const uploadImage = async (ctx: { req: TsRestRequest<typeof userContract.
                 }
             })
         })
-        
+
         userExits[type === 'profile'? "image": "coverImage"] = result
 
         await userExits.save()
