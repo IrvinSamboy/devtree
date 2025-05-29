@@ -3,7 +3,7 @@ import Signin from "../pages/auth/Signin/Signin.page"
 import RootLayout from "../components/layout/RootLayout"
 import Signup from "../pages/auth/Signup/Signup.page"
 import AppLayout from "../components/layout/appLayout"
-import DevTreeView from "../pages/Admin/DevTreeView/DevTreeView.page"
+import EditProfile from "../pages/Admin/EditProfile/EditProfile"
 import ProfileView from "../pages/Admin/ProfileView/ProfileView.page"
 import Loader from "../components/utils/Loader"
 import Page404 from "../pages/404/Page404.page"
@@ -36,7 +36,7 @@ export default function Router() {
             </Route>
 
             <Route path="/admin" element={<AppLayout />}>
-              <Route index={true} element={<DevTreeView />} />
+              <Route index={true} element={<EditProfile />} />
               <Route path='profile' element={<ProfileView />} />
             </Route>
           </Route>

@@ -10,7 +10,7 @@ import { useUpdateUserData } from "../../../providers/User"
 import { userData as TuserData } from "../../../providers/User/user.interface"
 import Loader from "../../../components/utils/Loader"
 
-export default function DevTreeView() {
+export default function EditProfile() {
   
   const queryClient = useQueryClient()
 
