@@ -35,7 +35,7 @@ export default function Router() {
               />
             </Route>
 
-            <Route path="/admin" element={<AppLayout />}>
+            <Route path="/editProfile" element={<AppLayout />}>
               <Route index={true} element={<EditProfile />} />
               <Route path='profile' element={<ProfileView />} />
             </Route>
