@@ -13,6 +13,7 @@ export default function EditProfile() {
           <Input 
             label="Username"
             type="text"
+            labelStyle=""
             errorMessage="You need add a use name"
           />
           <div>

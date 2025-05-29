@@ -1,3 +1,4 @@
+import { cn } from "../utils/utils";
 
 interface inputPropsI {
   errorMessage?: string;
@@ -22,11 +23,13 @@ export default function Input({
 }: inputPropsI) {
   return (
     <div className="flex flex-col space-y-1">
-      {label&& <label htmlFor="" className={labelStyle}>{label}</label>}
+      {label&& <label htmlFor="" className={cn(labelStyle)}>{label}</label>}
       <input
         className={
-            `bg-transparent w-full p-1.5 rounded-lg outline-none border-1 border-gray-400 focus:border-black ${styles}
-            ${errorMessage && "border-red-500"}`
+            cn(`bg-transparent w-full p-1.5 rounded-lg
+                outline-none border-1
+              border-gray-400 focus:border-black
+              ${errorMessage && "border-red-500"}`, styles)
         }
         type={type}
         placeholder={placeHolder}
