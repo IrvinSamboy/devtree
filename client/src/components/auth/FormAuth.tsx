@@ -20,7 +20,7 @@ export default function FormAuth({children, titleForm, subTitleForm} : {children
           
         </div>
       </div>
-      <div className={`hidden lg:block bg-[url('/public/images/loginBackground.jpg')] bg-cover bg-no-repeat`}></div>
+      <div className={`hidden lg:block bg-[url('/images/loginBackground.jpg')] bg-cover bg-no-repeat`}></div>
 
     </section>
   )
