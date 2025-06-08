@@ -5,9 +5,14 @@ import { social } from "../../../data/social"
 import { useState } from "react"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
+import { Controller, useForm } from "react-hook-form"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
+  const {
+          control, 
+          handleSubmit, 
+  } = useForm()
 
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
@@ -28,7 +33,7 @@ export default function EditProfile() {
         item
     )))
   }
-
+  
   return (
     <div className="space-y-6 pb-4">
       <div className="flex w-full gap-4">
@@ -38,14 +43,21 @@ export default function EditProfile() {
             <p className="text-gray-500">Update your profile details</p>
           </div>
           <div className=" p-6">
-            <form className="space-y-8">
-              <Input
-                label="Username"
-                type="text"
-                labelStyle="text-gray-700 font-base"
-
+            <form className="space-y-8" onSubmit={handleSubmit(() => {})}>
+              <Controller 
+                name="username"
+                control={control}
+                render={({field}) => (
+                <Input
+                  label="Username"
+                  type="text"
+                  labelStyle="text-gray-700 font-base"
+                  onChange={field.onChange}
+                  value={field.value}
+                />
+                )}
               />
-              <div className="flex flex-col">
+               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-700 font-medium">Description</label>
                 <textarea name="" id="" className="border rounded-lg h-74 resize-none border-gray-400"></textarea>
               </div>
