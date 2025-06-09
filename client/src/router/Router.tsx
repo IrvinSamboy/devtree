@@ -34,13 +34,12 @@ export default function Router() {
                 element={<Signup />}
               />
             </Route>
-
-            <Route path="/admin" element={<AppLayout />}>
+        </Route>
+        <Route path="/admin" element={<AppLayout />}>
               <Route index={true} element={<EditProfile />} />
               <Route path='profile' element={<ProfileView />} />
             </Route>
           </Route>
-        </Route>
       </Routes>
     </BrowserRouter>
   )
