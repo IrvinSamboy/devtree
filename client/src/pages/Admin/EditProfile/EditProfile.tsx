@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
+  const [activeDrag, setActiveDrag] = useState(false)
   const {
           control, 
           handleSubmit, 
@@ -79,9 +80,11 @@ export default function EditProfile() {
                   <p className="text-xl text-white font-semibold">EL</p>
                 </div>
                 <button
-                onDragEnter={() => console.log("hi")}
-                onDragLeave={() => console.log("bye")}
-                className="flex gap-3 border-2 cursor-pointer border-gray-300 p-2 rounded-lg ">
+                onDragEnter={() => setActiveDrag(true)}
+                onDragLeave={() => setActiveDrag(false)}
+                className={`flex gap-3 border-2 cursor-pointer p-2 rounded-lg transition-all 
+                  ${activeDrag? "border-mid-purple scale-110 text-mid-purple" : "border-gray-300"}`
+                }>
                   <CloudUpload />
                   Upload
                 </button>
