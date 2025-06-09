@@ -78,7 +78,10 @@ export default function EditProfile() {
                 <div className="bg-gray-400 px-7 py-6 rounded-full">
                   <p className="text-xl text-white font-semibold">EL</p>
                 </div>
-                <button className="flex gap-3 border-2 cursor-pointer border-gray-300 p-2 rounded-lg ">
+                <button
+                onDragEnter={() => console.log("hi")}
+                onDragLeave={() => console.log("bye")}
+                className="flex gap-3 border-2 cursor-pointer border-gray-300 p-2 rounded-lg ">
                   <CloudUpload />
                   Upload
                 </button>
