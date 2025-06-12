@@ -2,6 +2,8 @@ import type React from "react"
 
 import { useState, useRef, useCallback } from "react"
 import { Upload, ImageIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+
 interface ImageUploadButtonProps {
   onImageSelect?: (file: File) => void
   maxSize?: number // en MB

@@ -5,7 +5,7 @@ import { InputsSigninT } from "../../../interfaces/User.interface";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignin } from "../../../providers/Auth";
 import { toast } from "react-toastify";
-import Button from "../../../components/ui/Button";
+import Button from "../../../components/ui/ButtonPurple";
 import Loader from "../../../components/utils/Loader";
 export default function Signin() {
   const {

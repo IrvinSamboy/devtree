@@ -5,7 +5,7 @@ import { InputsSignupT } from "../../../interfaces/User.interface"
 import { useSignUp } from "../../../providers/Auth"
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom"
-import Button from "../../../components/ui/Button"
+import Button from "../../../components/ui/ButtonPurple"
 import Loader from "../../../components/utils/Loader"
 
 export default function Signup() {

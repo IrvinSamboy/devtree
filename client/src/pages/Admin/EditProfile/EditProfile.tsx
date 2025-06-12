@@ -1,5 +1,5 @@
 import { CloudUpload } from "lucide-react"
-import Button from "../../../components/ui/Button"
+import Button from "../../../components/ui/ButtonPurple"
 import Input from "../../../components/ui/Input"
 import { social } from "../../../data/social"
 import { useState } from "react"
