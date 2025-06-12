@@ -35,6 +35,16 @@ export default function EditProfile() {
     )))
   }
 
+  const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setActiveDrag(true)
+  }
+
+  const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setActiveDrag(false)
+  }
+
   const dragDropFunction = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setActiveDrag(false)
@@ -86,21 +96,15 @@ export default function EditProfile() {
                   <p className="text-xl text-white font-semibold">EL</p>
                 </div>
                 <div
-                onDragEnter={(e) => {
-                  e.preventDefault()
-                  setActiveDrag(true)
-                }}
+                onDragEnter={onDragEnter}
                 onDragOver={(e) => e.preventDefault()}
-                onDragLeave={(e) => {
-                  e.preventDefault()
-                  setActiveDrag(false)
-                }}
+                onDragLeave={onDragLeave}
                 onDrop={dragDropFunction}
-                className={`flex gap-3 border-2 cursor-pointer p-2 rounded-lg transition-all 
+                className={`flex gap-3 border-2 cursor-pointer p-2 rounded-lg transition-all
                   ${activeDrag? "border-mid-purple scale-110 text-mid-purple" : "border-gray-300"}`
                 }>
                   <CloudUpload />
-                  Upload
+                  <p >Upload</p>
                 </div>
               </div>
             </div>
