@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 interface ImageUploadButtonProps {
   onImageSelect?: (file: File) => void
-  maxSize?: number // en MB
+  maxSize?: number // in MB
   acceptedTypes?: string[]
   buttonText?: string
 }
@@ -15,7 +15,7 @@ export default function ImageUploadButton({
   onImageSelect,
   maxSize = 5,
   acceptedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"],
-  buttonText = "Subir imagen",
+  buttonText = "Upload image",
 }: ImageUploadButtonProps) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -23,12 +23,12 @@ export default function ImageUploadButton({
 
   const validateFile = (file: File): boolean => {
     if (!acceptedTypes.includes(file.type)) {
-      setError(`Tipo de archivo no válido. Solo se permiten: ${acceptedTypes.join(", ")}`)
+      setError(`Invalid file type. Allowed: ${acceptedTypes.join(", ")}`)
       return false
     }
 
     if (file.size > maxSize * 1024 * 1024) {
-      setError(`El archivo es demasiado grande. Máximo ${maxSize}MB`)
+      setError(`File is too large. Maximum size is ${maxSize}MB`)
       return false
     }
 
@@ -70,7 +70,7 @@ export default function ImageUploadButton({
 
       const files = e.dataTransfer.files
       if (files.length > 0) {
-        handleFile(files[0]) // Solo procesamos el primer archivo
+        handleFile(files[0])
       }
     },
     [handleFile],
@@ -80,9 +80,9 @@ export default function ImageUploadButton({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files
       if (files && files.length > 0) {
-        handleFile(files[0]) // Solo procesamos el primer archivo
+        handleFile(files[0])
       }
-      // Limpiar el input para permitir seleccionar el mismo archivo nuevamente
+
       if (fileInputRef.current) {
         fileInputRef.current.value = ""
       }
@@ -107,7 +107,7 @@ export default function ImageUploadButton({
       >
         <div className="flex items-center gap-2">
           {isDragOver ? <ImageIcon className="h-4 w-4" /> : <Upload className="h-4 w-4" />}
-          <span>{isDragOver ? "Suelta la imagen" : buttonText}</span>
+          <span>{isDragOver ? "Drop the image" : buttonText}</span>
         </div>
       </Button>
 

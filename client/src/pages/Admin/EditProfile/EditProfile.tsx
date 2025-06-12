@@ -6,6 +6,7 @@ import { useState } from "react"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
 import { Controller, useForm } from "react-hook-form"
+import ImageUploadButton from "@/components/layout/appLayout/components/ImageUploadButton"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
@@ -95,17 +96,7 @@ export default function EditProfile() {
                 <div className="bg-gray-400 px-7 py-6 rounded-full">
                   <p className="text-xl text-white font-semibold">EL</p>
                 </div>
-                <div
-                onDragEnter={onDragEnter}
-                onDragOver={(e) => e.preventDefault()}
-                onDragLeave={onDragLeave}
-                onDrop={dragDropFunction}
-                className={`flex gap-3 border-2 cursor-pointer p-2 rounded-lg transition-all
-                  ${activeDrag? "border-mid-purple scale-110 text-mid-purple" : "border-gray-300"}`
-                }>
-                  <CloudUpload />
-                  <p >Upload</p>
-                </div>
+                <ImageUploadButton />
               </div>
             </div>
             <div className="flex flex-col gap-4">
