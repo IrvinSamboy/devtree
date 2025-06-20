@@ -7,6 +7,7 @@ import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
 import { Controller, useForm } from "react-hook-form"
 import ImageUploadButton from "@/components/layout/appLayout/components/ImageUploadButton"
+import ImageDragDrop from "@/components/layout/appLayout/components/ImageDragDrop"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
@@ -101,11 +102,7 @@ export default function EditProfile() {
             </div>
             <div className="flex flex-col gap-4">
               <label htmlFor="">Cover image</label>
-              <div className="w-full h-90 bg-emerald-500 flex items-center rounded-lg justify-center">
-                <p className="text-white text-lg font-semibold">
-                  Cover image
-                </p>
-              </div>
+              <ImageDragDrop />
             </div>
           </div>
         </div>
