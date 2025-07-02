@@ -8,9 +8,12 @@ import { Switch } from '@headlessui/react'
 import { Controller, useForm } from "react-hook-form"
 import ImageUploadButton from "@/components/layout/appLayout/components/ImageUploadButton"
 import ImageDragDrop from "@/components/layout/appLayout/components/ImageDragDrop"
+import Loader from "@/components/utils/Loader"
+import { useUserData } from "@/providers/User"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
+  const {data, isLoading, isError} = useUserData()
   const [activeDrag, setActiveDrag] = useState(false)
   const {
           control, 
@@ -51,6 +54,14 @@ export default function EditProfile() {
     e.preventDefault()
     setActiveDrag(false)
     console.log(e.dataTransfer.files)
+  }
+
+  if(isLoading){
+    return (
+      <div className="h-screen">
+        <Loader />
+      </div>
+    )
   }
   
   return (
@@ -114,8 +125,8 @@ export default function EditProfile() {
         </div>
         <div className="grid grid-cols-2 gap-4 h-full p-6">
           {
-            socialMediaLink.map((item) => (
-              <div className="flex gap-3 items-center bg-white px-4 py-2 border border-gray-300 rounded-lg">
+            socialMediaLink.map((item, index) => (
+              <div key={`socialMediaLink${index}`} className="flex gap-3 items-center bg-white px-4 py-2 border border-gray-300 rounded-lg">
                 <img src={`/social/icon_${item.name}.svg`} className="max-w-10" alt="" />
                 <input
                   name={item.name}

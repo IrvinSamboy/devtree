@@ -28,7 +28,11 @@ export default function VerifyTokenMiddleware() {
     }, [location.pathname])
     
     if(isLoading) {
-        return <Loader />
+        return ( 
+            <div className="h-screen">
+                <Loader />
+            </div>
+        )
     }
 
     else if(location.pathname.includes('/auth')) {
