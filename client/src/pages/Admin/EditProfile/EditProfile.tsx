@@ -14,7 +14,6 @@ import { useUserData } from "@/providers/User"
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
   const {data, isLoading, isError} = useUserData()
-  const [activeDrag, setActiveDrag] = useState(false)
   const {
           control, 
           handleSubmit, 
@@ -38,22 +37,6 @@ export default function EditProfile() {
       } :
         item
     )))
-  }
-
-  const onDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setActiveDrag(true)
-  }
-
-  const onDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setActiveDrag(false)
-  }
-
-  const dragDropFunction = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setActiveDrag(false)
-    console.log(e.dataTransfer.files)
   }
 
   if(isLoading){
