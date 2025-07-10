@@ -15,7 +15,7 @@ export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
   const {data, isLoading, isError} = useUserData()
   const [uploadedImage, setUploadedImage] = useState<string | null>(data?.image || null)
-
+  const [profileImage, setProfileImage] = useState<string | null>(data?.image || null)
   const {
           control,
           formState: {errors},

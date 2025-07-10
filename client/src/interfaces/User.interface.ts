@@ -5,7 +5,8 @@ export interface UserI {
     password: string;
     description: string;
     image: string;
-    socialMediaUrls: string
+    socialMediaUrls: string;
+    coverImage: string
 }
 
 export type InputsSigninT = Omit<UserI, "username" | "name"> 
