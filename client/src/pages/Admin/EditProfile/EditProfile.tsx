@@ -14,7 +14,7 @@ import { updateUserDataPayload } from "@/providers/User/user.interface"
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
   const {data, isLoading, isError} = useUserData()
-  const [uploadedImage, setUploadedImage] = useState<string | null>(data?.image || null)
+  const [uploadedImage, setUploadedImage] = useState<string | null>(data?.coverImage || null)
   const [profileImage, setProfileImage] = useState<string | null>(data?.image || null)
   const {
           control,
@@ -28,7 +28,8 @@ export default function EditProfile() {
                   userName: '',
                   description: '',
                   image: '',
-                  socialMediaUrls: ''
+                  socialMediaUrls: '',
+                  coverImage: ''
             }
           }
       )
@@ -39,7 +40,8 @@ export default function EditProfile() {
       userName: data.userName,
       description: data.description,
       image: data.image,
-      socialMediaUrls: data.socialMediaUrls
+      socialMediaUrls: data.socialMediaUrls,
+      coverImage: ''
     })
     }
   }, [data])
@@ -62,6 +64,10 @@ export default function EditProfile() {
       } :
         item
     )))
+  }
+
+  const onImageSelect = (file: File) => {
+    setProfileImage(URL.createObjectURL(file))
   }
 
   if(isLoading){
@@ -117,10 +123,22 @@ export default function EditProfile() {
             <div>
               <label htmlFor=""></label>
               <div className="flex items-center gap-4">
-                <div className="bg-gray-400 px-7 py-6 rounded-full">
-                  <p className="text-xl text-white font-semibold">EL</p>
-                </div>
-                <ImageUploadButton />
+                {
+                  profileImage?
+                      <img 
+                        src={profileImage} 
+                        className="rounded-full size-20 border border-gray-300 object-cover" 
+                        alt="profileImage" 
+                      />
+                    :
+
+                    <div className="bg-gray-400 px-7 py-6 rounded-full">
+                          <p className="text-xl text-white font-semibold">{data?.userName.slice(0,2) || "US"}</p>                
+                    </div>
+                }
+                <ImageUploadButton
+                  onImageSelect={onImageSelect}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-4">
