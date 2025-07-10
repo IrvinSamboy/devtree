@@ -4,8 +4,16 @@ import { useState, useRef, type ChangeEvent } from "react"
 import { Upload, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export default function ImageDropzone() {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+export default function ImageDropzone(
+  {
+    uploadedImage,
+    setUploadedImage
+  } :
+  {
+    uploadedImage: string | null, 
+    setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>
+  }
+) {
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 

@@ -1,8 +1,7 @@
-import { CloudUpload } from "lucide-react"
 import Button from "../../../components/ui/ButtonPurple"
 import Input from "../../../components/ui/Input"
 import { social } from "../../../data/social"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
 import { Controller, useForm } from "react-hook-form"
@@ -10,15 +9,41 @@ import ImageUploadButton from "@/components/layout/appLayout/components/ImageUpl
 import ImageDragDrop from "@/components/layout/appLayout/components/ImageDragDrop"
 import Loader from "@/components/utils/Loader"
 import { useUserData } from "@/providers/User"
+import { updateUserDataPayload } from "@/providers/User/user.interface"
 
 export default function EditProfile() {
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
   const {data, isLoading, isError} = useUserData()
-  const {
-          control, 
-          handleSubmit, 
-  } = useForm()
+  const [uploadedImage, setUploadedImage] = useState<string | null>(data?.image || null)
 
+  const {
+          control,
+          formState: {errors},
+          register,
+          handleSubmit,
+          reset
+        } = useForm<updateUserDataPayload>(
+          {
+            defaultValues: {
+                  userName: '',
+                  description: '',
+                  image: '',
+                  socialMediaUrls: ''
+            }
+          }
+      )
+
+  useEffect(() => {
+    if(data){
+      reset({
+      userName: data.userName,
+      description: data.description,
+      image: data.image,
+      socialMediaUrls: data.socialMediaUrls
+    })
+    }
+  }, [data])
+  
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
       item.name === e.target.name ? {
@@ -58,8 +83,11 @@ export default function EditProfile() {
           <div className=" p-6">
             <form className="space-y-8" onSubmit={handleSubmit(() => {})}>
               <Controller 
-                name="username"
+                name="userName"
                 control={control}
+                rules={{
+                  required: "User name is required",
+                  }}
                 render={({field}) => (
                 <Input
                   label="Username"
@@ -67,12 +95,13 @@ export default function EditProfile() {
                   labelStyle="text-gray-700 font-base"
                   onChange={field.onChange}
                   value={field.value}
+                  errorMessage={errors.userName && errors.userName.message}
                 />
                 )}
               />
                <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-700 font-medium">Description</label>
-                <textarea name="" id="" className="border rounded-lg h-74 resize-none border-gray-400"></textarea>
+                <textarea id="" className="border rounded-lg h-74 resize-none border-gray-400" {...register("description")} ></textarea>
               </div>
               <Button>Save changes</Button>
             </form>
@@ -96,7 +125,10 @@ export default function EditProfile() {
             </div>
             <div className="flex flex-col gap-4">
               <label htmlFor="">Cover image</label>
-              <ImageDragDrop />
+              <ImageDragDrop
+                uploadedImage={uploadedImage}
+                setUploadedImage={setUploadedImage}
+              />
             </div>
           </div>
         </div>
