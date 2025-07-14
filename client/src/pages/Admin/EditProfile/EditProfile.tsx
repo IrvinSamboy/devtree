@@ -32,9 +32,7 @@ export default function EditProfile() {
             defaultValues: {
                   userName: '',
                   description: '',
-                  image: '',
                   socialMediaUrls: '',
-                  coverImage: ''
             }
           }
       )
@@ -44,9 +42,7 @@ export default function EditProfile() {
       reset({
         userName: userData.userName,
         description: userData.description,
-        image: userData.image,
         socialMediaUrls: userData.socialMediaUrls,
-        coverImage: userData.coverImage
       })
     }
   }, [userData])
