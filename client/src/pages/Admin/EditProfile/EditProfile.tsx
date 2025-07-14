@@ -53,10 +53,15 @@ export default function EditProfile() {
   
   useEffect(() => {
     if(uploadedCoverImage == null){
-      console.log("hola")
       setValue('coverImage', '')
     }
   }, [uploadedCoverImage])
+ 
+  useEffect(() => {
+    if(profileImage == null){
+      setValue('image', '')
+    }
+  }, [profileImage])
 
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
@@ -90,6 +95,7 @@ export default function EditProfile() {
   fieldName: "image" | "coverImage"
 ) => {
   if (image && image !== userDataImage && typeof image !== "string") {
+    console.log(image)
     uploadImage(
       {
         file: image,
@@ -98,7 +104,6 @@ export default function EditProfile() {
       {
         onSuccess: (response) => {
           setImage(response.message)
-          setValue(fieldName, response.message)
         },
         onError: (response) => {
           toast(response.response?.data.message || `Error uploading ${fieldName}`)
@@ -126,15 +131,14 @@ export default function EditProfile() {
       "image"
     )
     
-
     updateUserData(
       {
         userName: data.userName,
         name: data.name,
         description: data.description,
         socialMediaUrls: data.socialMediaUrls,
-        image: data.image,
-        coverImage: data.coverImage
+        ...(!data.image && {image: data.image}),
+        ...(data.coverImage && {coverImage: data.coverImage})
       },
       {
         onSuccess: () => {
