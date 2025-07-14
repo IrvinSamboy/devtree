@@ -23,7 +23,9 @@ export const useUpdateUserData = () => {
                 userName: data.userName,
                 name: data.name,
                 description: data.description,
-                socialMediaUrls: data.socialMediaUrls
+                socialMediaUrls: data.socialMediaUrls,
+                image: data.image,
+                coverImage: data.coverImage
             }
         )
 
