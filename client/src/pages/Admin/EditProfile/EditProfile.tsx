@@ -214,6 +214,7 @@ export default function EditProfile() {
             <div className="flex flex-col gap-4">
               <label htmlFor="">Cover image</label>
               <ImageDragDrop
+                uploadedCoverImage={uploadedCoverImage}
                 setProfileImage={setUploadedCoverImage}
               />
             </div>

@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button"
 
 export default function ImageDropzone(
   {
-    setProfileImage
+    setProfileImage,
+    uploadedCoverImage
   } :
   { 
+    uploadedCoverImage: string | File | null
     setProfileImage: React.Dispatch<React.SetStateAction<File | string | null>>
   }
 ) {
@@ -53,6 +55,7 @@ export default function ImageDropzone(
   const removeImage = (e: React.MouseEvent) => {
     e.stopPropagation()
     setUploadedImage(null)
+    setProfileImage(null)
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
@@ -107,6 +110,8 @@ export default function ImageDropzone(
     }
   }
 
+  const imageDisplayed = typeof uploadedCoverImage === "string"? uploadedCoverImage: uploadedImage
+
   return (
     <div
       className={`
@@ -114,13 +119,13 @@ export default function ImageDropzone(
         ${
           isDragging
             ? "border-emerald-400 border-solid bg-emerald-100 scale-105"
-            : uploadedImage
+            : imageDisplayed
               ? "border-emerald-400 border-solid"
               : "border-emerald-300 border-dashed bg-emerald-400 hover:bg-emerald-500"
         }
       `}
       style={{
-        backgroundImage: uploadedImage ? `url(${uploadedImage})` : "none",
+        backgroundImage: imageDisplayed ? `url(${imageDisplayed})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -135,7 +140,7 @@ export default function ImageDropzone(
       <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileInput} className="hidden" />
 
       {/* Trash button */}
-      {uploadedImage && (
+      {imageDisplayed && (
         <button
           onClick={removeImage}
           className="absolute top-4 right-4 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-110 z-20"
@@ -157,7 +162,7 @@ export default function ImageDropzone(
       )}
 
       {/* Default content */}
-      {!uploadedImage && !isDragging && (
+      {!imageDisplayed && !isDragging && (
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
           <Upload className="w-12 h-12 mb-4" />
           <h3 className="text-xl font-semibold mb-2">Drag and drop images</h3>
@@ -180,7 +185,7 @@ export default function ImageDropzone(
       )}
 
       {/* Overlay for changing image */}
-      {uploadedImage && !isDragging && (
+      {imageDisplayed && !isDragging && (
         <div className="absolute inset-0 bg-black/0 hover:bg-black/50 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
           <div className="text-white text-center">
             <Upload className="w-8 h-8 mx-auto mb-2" />
