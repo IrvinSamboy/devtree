@@ -32,7 +32,6 @@ export default function EditProfile() {
             defaultValues: {
                   userName: '',
                   description: '',
-                  socialMediaUrls: '',
             }
           }
       )
@@ -41,8 +40,7 @@ export default function EditProfile() {
     if(userData){
       reset({
         userName: userData.userName,
-        description: userData.description,
-        socialMediaUrls: userData.socialMediaUrls,
+        description: userData.description
       })
     }
   }, [userData])
@@ -114,13 +112,12 @@ export default function EditProfile() {
       setProfileImage,
       "image"
     )
-    
     updateUserData(
       {
         userName: data.userName,
         name: data.name,
         description: data.description,
-        socialMediaUrls: data.socialMediaUrls,
+        socialMediaUrls: JSON.stringify(socialMediaLink),
         ...(!profileImage && {image: ''}),
         ...(!uploadedCoverImage && {coverImage: ''})
       },
