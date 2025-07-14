@@ -137,8 +137,8 @@ export default function EditProfile() {
         name: data.name,
         description: data.description,
         socialMediaUrls: data.socialMediaUrls,
-        ...(!data.image && {image: ''}),
-        ...(data.coverImage && {coverImage: ''})
+        ...(!profileImage && {image: ''}),
+        ...(!uploadedCoverImage && {coverImage: ''})
       },
       {
         onSuccess: () => {
