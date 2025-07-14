@@ -59,7 +59,9 @@ export const userDataSchemaResponse = z.object({
 export const updateUserDataSchemaRequest = userData.omit({email: true}).extend({
     userName: z.string().optional(),
     name: z.string().optional(),
-    description: z.string().optional()
+    description: z.string().optional(),
+    image: z.string().optional(),
+    coverImage: z.string().optional()
 })
 
 export const updateUserDataSchemaResponse = z.object({

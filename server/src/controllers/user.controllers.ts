@@ -163,7 +163,9 @@ export const updateUserData = async (ctx: { req: TupdateUserDataSchemaRequest, r
                 userName: userUpdated.userName,
                 name: userUpdated.name,
                 description: userUpdated.description,
-                socialMediaUrls: userUpdated.socialMediaUrls
+                socialMediaUrls: userUpdated.socialMediaUrls,
+                coverImage: userUpdated.coverImage,
+                image: userUpdated.image
             }
         }
 
