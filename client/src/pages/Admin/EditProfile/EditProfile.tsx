@@ -51,18 +51,6 @@ export default function EditProfile() {
     }
   }, [userData])
   
-  useEffect(() => {
-    if(uploadedCoverImage == null){
-      setValue('coverImage', '')
-    }
-  }, [uploadedCoverImage])
- 
-  useEffect(() => {
-    if(profileImage == null){
-      setValue('image', '')
-    }
-  }, [profileImage])
-
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
       item.name === e.target.name ? {
