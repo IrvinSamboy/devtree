@@ -17,7 +17,7 @@ export default function VerifyTokenMiddleware() {
            return !isError
         }, [isError, location.state?.skipMiddleware]
     )
- 
+    
     useEffect(()=> {
         if(location.state?.skipMiddleware){
             location.state.skipMiddleware = false

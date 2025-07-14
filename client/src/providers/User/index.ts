@@ -10,7 +10,8 @@ export const useUserData = () => {
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData)
             return response.data
-        }
+        },
+        refetchOnWindowFocus: false
     })
 }
 

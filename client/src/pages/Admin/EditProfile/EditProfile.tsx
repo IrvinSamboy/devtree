@@ -14,7 +14,7 @@ import { typeImageEnum } from "@/providers/User/user.interface"
 import { toast } from "react-toastify"
 
 export default function EditProfile() {
-  const {data: userData, isLoading} = useUserData()
+  const {data: userData, isLoading, refetch} = useUserData()
   const {mutate: updateUserData, isLoading: isLoadingUserData} = useUpdateUserData()
   const {mutate: uploadImage, isLoading: isLoadingUploadImage} = useUploadImage()
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(userData!.socialMediaUrls? JSON.parse(userData!.socialMediaUrls) : social)
@@ -38,6 +38,8 @@ export default function EditProfile() {
             }
           }
       )
+    
+  useEffect(() => {refetch()}, [])
 
   useEffect(() => {
     if(userData){
@@ -51,6 +53,13 @@ export default function EditProfile() {
     }
   }, [userData])
   
+  useEffect(() => {
+    if(uploadedCoverImage == null){
+      console.log("hola")
+      setValue('coverImage', '')
+    }
+  }, [uploadedCoverImage])
+
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
       item.name === e.target.name ? {
@@ -118,6 +127,7 @@ export default function EditProfile() {
       setProfileImage,
       "image"
     )
+    
 
     updateUserData(
       {
@@ -157,7 +167,7 @@ export default function EditProfile() {
             <p className="text-gray-500">Update your profile details</p>
           </div>
           <div className=" p-6">
-            <form className="space-y-8" onSubmit={handleSubmit((data) => {})}>
+            <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
               <Controller 
                 name="userName"
                 control={control}
