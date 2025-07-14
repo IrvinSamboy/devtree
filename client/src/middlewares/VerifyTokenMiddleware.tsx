@@ -1,12 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { useVerifySessionToken } from "../providers/Auth"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Loader from "../components/utils/Loader"
 
 export default function VerifyTokenMiddleware() {
 
     const { isLoading, isError, refetch } = useVerifySessionToken()
-
+    const [checking, setChecking] = useState(true)
     const location = useLocation()
 
     const userAuthenticated = useMemo(
@@ -20,14 +20,20 @@ export default function VerifyTokenMiddleware() {
  
     useEffect(()=> {
         if(location.state?.skipMiddleware){
-            console.log(location.state)
             location.state.skipMiddleware = false
             return
         }
-        refetch()
+
+        const verify = async () => {
+            setChecking(true)
+            await refetch()
+            setChecking(false)
+        }
+
+        verify()
     }, [location.pathname])
     
-    if(isLoading) {
+    if(checking) {
         return ( 
             <div className="h-screen">
                 <Loader />
