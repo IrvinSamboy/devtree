@@ -14,7 +14,7 @@ import { typeImageEnum } from "@/providers/User/user.interface"
 import { toast } from "react-toastify"
 
 export default function EditProfile() {
-  const {data: userData, isLoading, refetch} = useUserData()
+  const {data: userData, isLoading} = useUserData()
   const {mutate: updateUserData, isLoading: isLoadingUserData} = useUpdateUserData()
   const {mutate: uploadImage, isLoading: isLoadingUploadImage} = useUploadImage()
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(userData!.socialMediaUrls? JSON.parse(userData!.socialMediaUrls) : social)
@@ -39,8 +39,6 @@ export default function EditProfile() {
           }
       )
     
-  useEffect(() => {refetch()}, [])
-
   useEffect(() => {
     if(userData){
       reset({
