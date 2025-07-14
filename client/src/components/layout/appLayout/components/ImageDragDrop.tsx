@@ -6,14 +6,13 @@ import { Button } from "@/components/ui/button"
 
 export default function ImageDropzone(
   {
-    uploadedImage,
-    setUploadedImage
+    setProfileImage
   } :
-  {
-    uploadedImage: string | null, 
-    setUploadedImage: React.Dispatch<React.SetStateAction<string | null>>
+  { 
+    setProfileImage: React.Dispatch<React.SetStateAction<File | string | null>>
   }
 ) {
+  const [uploadedImage, setUploadedImage] = useState<string | null>()
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -27,7 +26,7 @@ export default function ImageDropzone(
       alert("The file is too large. Maximum 10MB.")
       return
     }
-
+    setProfileImage(file)
     const reader = new FileReader()
     reader.onload = (e) => {
       const result = e.target?.result as string

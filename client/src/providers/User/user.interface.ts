@@ -8,6 +8,12 @@ export type MessageT = {
     message: string;
 }
 
+export enum typeImageEnum {
+    PROFILE = "profile",
+    COVER = "cover"
+}
+
 export type uploadImage = {
     file: File
+    type: typeImageEnum
 }

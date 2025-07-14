@@ -8,20 +8,25 @@ import { Controller, useForm } from "react-hook-form"
 import ImageUploadButton from "@/components/layout/appLayout/components/ImageUploadButton"
 import ImageDragDrop from "@/components/layout/appLayout/components/ImageDragDrop"
 import Loader from "@/components/utils/Loader"
-import { useUserData } from "@/providers/User"
+import { useUpdateUserData, useUploadImage, useUserData } from "@/providers/User"
 import { updateUserDataPayload } from "@/providers/User/user.interface"
+import { typeImageEnum } from "@/providers/User/user.interface"
+import { toast } from "react-toastify"
 
 export default function EditProfile() {
-  const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(social)
-  const {data, isLoading, isError} = useUserData()
-  const [uploadedImage, setUploadedImage] = useState<string | null>(data?.coverImage || null)
-  const [profileImage, setProfileImage] = useState<string | null>(data?.image || null)
+  const {data: userData, isLoading} = useUserData()
+  const {mutate: updateUserData, isLoading: isLoadingUserData} = useUpdateUserData()
+  const {mutate: uploadImage, isLoading: isLoadingUploadImage} = useUploadImage()
+  const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(userData!.socialMediaUrls? JSON.parse(userData!.socialMediaUrls) : social)
+  const [uploadedCoverImage, setUploadedCoverImage] = useState<File | string | null>(userData?.coverImage || null)
+  const [profileImage, setProfileImage] = useState<File | string | null>(userData?.image || null)
   const {
           control,
           formState: {errors},
           register,
           handleSubmit,
-          reset
+          reset,
+          setValue
         } = useForm<updateUserDataPayload>(
           {
             defaultValues: {
@@ -35,16 +40,16 @@ export default function EditProfile() {
       )
 
   useEffect(() => {
-    if(data){
+    if(userData){
       reset({
-      userName: data.userName,
-      description: data.description,
-      image: data.image,
-      socialMediaUrls: data.socialMediaUrls,
-      coverImage: ''
-    })
+        userName: userData.userName,
+        description: userData.description,
+        image: userData.image,
+        socialMediaUrls: userData.socialMediaUrls,
+        coverImage: userData.coverImage
+      })
     }
-  }, [data])
+  }, [userData])
   
   const handleCHangeURL = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSocialMediaLink(socialMediaLink.map(item => (
@@ -67,7 +72,72 @@ export default function EditProfile() {
   }
 
   const onImageSelect = (file: File) => {
-    setProfileImage(URL.createObjectURL(file))
+    setProfileImage(file)
+  }
+
+  const handleImageUpload = (
+  image: File | string | null,
+  userDataImage: string | undefined,
+  type: typeImageEnum,
+  setImage: (url: string) => void,
+  fieldName: "image" | "coverImage"
+) => {
+  if (image && image !== userDataImage && typeof image !== "string") {
+    uploadImage(
+      {
+        file: image,
+        type: type
+      },
+      {
+        onSuccess: (response) => {
+          setImage(response.message)
+          setValue(fieldName, response.message)
+        },
+        onError: (response) => {
+          toast(response.response?.data.message || `Error uploading ${fieldName}`)
+        }
+      }
+    )
+  }
+}
+
+  const onSubmit = (data: updateUserDataPayload) => {
+
+    handleImageUpload(
+      uploadedCoverImage,
+      userData?.coverImage,
+      typeImageEnum.COVER,
+      setUploadedCoverImage,
+      "coverImage"
+    )
+
+    handleImageUpload(
+      profileImage,
+      userData?.image,
+      typeImageEnum.PROFILE,
+      setProfileImage,
+      "image"
+    )
+
+    updateUserData(
+      {
+        userName: data.userName,
+        name: data.name,
+        description: data.description,
+        socialMediaUrls: data.socialMediaUrls,
+        image: data.image,
+        coverImage: data.coverImage
+      },
+      {
+        onSuccess: () => {
+          toast("User profiled updated")
+        },
+
+        onError: (response) => {
+          toast(response.response?.data.message || 'Error updating user')
+        }
+      }
+    )
   }
 
   if(isLoading){
@@ -87,7 +157,7 @@ export default function EditProfile() {
             <p className="text-gray-500">Update your profile details</p>
           </div>
           <div className=" p-6">
-            <form className="space-y-8" onSubmit={handleSubmit(() => {})}>
+            <form className="space-y-8" onSubmit={handleSubmit((data) => {})}>
               <Controller 
                 name="userName"
                 control={control}
@@ -126,14 +196,14 @@ export default function EditProfile() {
                 {
                   profileImage?
                       <img 
-                        src={profileImage} 
+                        src={typeof profileImage === "string"? profileImage : URL.createObjectURL(profileImage)} 
                         className="rounded-full size-20 border border-gray-300 object-cover" 
                         alt="profileImage" 
                       />
                     :
 
                     <div className="bg-gray-400 px-7 py-6 rounded-full">
-                          <p className="text-xl text-white font-semibold">{data?.userName.slice(0,2) || "US"}</p>                
+                          <p className="text-xl text-white font-semibold">{userData?.userName.slice(0,2) || "US"}</p>                
                     </div>
                 }
                 <ImageUploadButton
@@ -144,8 +214,7 @@ export default function EditProfile() {
             <div className="flex flex-col gap-4">
               <label htmlFor="">Cover image</label>
               <ImageDragDrop
-                uploadedImage={uploadedImage}
-                setUploadedImage={setUploadedImage}
+                setProfileImage={setUploadedCoverImage}
               />
             </div>
           </div>

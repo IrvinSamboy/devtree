@@ -10,8 +10,7 @@ export const useUserData = () => {
         queryFn: async () => {
             const response = await apiDevTree.get(apiDevTreeEndPoints.user.userData)
             return response.data
-        },
-        enabled: false
+        }
     })
 }
 
@@ -38,6 +37,7 @@ export const useUploadImage = () => {
         mutationFn: async (data) => {
             const formData = new FormData()
             formData.append("file", data.file)
+            formData.append("type", data.type)
             const response = await apiDevTree.post(apiDevTreeEndPoints.user.uploadImage, formData)
 
             return response.data
