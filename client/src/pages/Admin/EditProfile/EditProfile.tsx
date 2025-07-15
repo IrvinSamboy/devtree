@@ -1,7 +1,7 @@
 import Button from "../../../components/ui/ButtonPurple"
 import Input from "../../../components/ui/Input"
 import { social } from "../../../data/social"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { devTreeLink } from "../../../interfaces/User.interface"
 import { Switch } from '@headlessui/react'
 import { Controller, useForm } from "react-hook-form"
@@ -15,7 +15,7 @@ import { toast } from "react-toastify"
 
 export default function EditProfile() {
   const {data: userData, isLoading} = useUserData()
-  const {mutate: updateUserData, isLoading: isLoadingUserData} = useUpdateUserData()
+  const {mutate: updateUserData, isLoading: isLoadingUpdateUserData} = useUpdateUserData()
   const {mutate: uploadImage, isLoading: isLoadingUploadImage} = useUploadImage()
   const [socialMediaLink, setSocialMediaLink] = useState<devTreeLink[]>(userData!.socialMediaUrls? JSON.parse(userData!.socialMediaUrls) : social)
   const [uploadedCoverImage, setUploadedCoverImage] = useState<File | string | null>(userData?.coverImage || null)
@@ -133,6 +133,8 @@ export default function EditProfile() {
     )
   }
 
+  const itsUpdating = useMemo(() => isLoadingUpdateUserData || isLoadingUploadImage, [isLoadingUpdateUserData, isLoadingUploadImage])
+
   if(isLoading){
     return (
       <div className="h-screen">
@@ -172,7 +174,17 @@ export default function EditProfile() {
                 <label htmlFor="" className="text-gray-700 font-medium">Description</label>
                 <textarea id="" className="border rounded-lg h-74 resize-none border-gray-400" {...register("description")} ></textarea>
               </div>
-              <Button>Save changes</Button>
+              <Button
+                disabled={itsUpdating}
+                styles={`${itsUpdating && "opacity-50"}`}
+              > 
+                { 
+                  itsUpdating?
+                    <Loader styles="border-white !p-2" />
+                  :
+                  "Save changes"
+                }                
+              </Button>
             </form>
           </div>
         </div>
