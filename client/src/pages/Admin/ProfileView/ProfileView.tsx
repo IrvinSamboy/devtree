@@ -1,5 +1,17 @@
+import Loader from "@/components/utils/Loader"
+import { useUserData } from "@/providers/User"
 
 export default function ProfileView() {
+  const {data: userData, isLoading} = useUserData()
+
+  if(isLoading){
+    return (
+      <div className="h-screen">
+        <Loader />
+      </div>
+    )
+  }
+
   return (
     <div className=" rounded-3xl">
       <div className="bg-emerald-400 h-32 rounded-t-3xl">
@@ -13,7 +25,7 @@ export default function ProfileView() {
         </div>
         <p>Irvin Samboy</p>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro nostrum labore pariatur hic, maxime incidunt dolor ut aliquam distinctio qui repudiandae soluta suscipit reiciendis amet nisi esse dolorum doloribus id.</p>
-        
+
       </div>
     </div>
   )
