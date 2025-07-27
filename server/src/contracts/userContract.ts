@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import { SignupSchemaRequest, SigninSchemaRequest, Message, userData, updateUserDataSchemaRequest, uploadImageSchema  } from '../schemas/userSchema';
+import { SignupSchemaRequest, SigninSchemaRequest, Message, userData, updateUserDataSchemaRequest, uploadImageSchema, devtreeUser  } from '../schemas/userSchema';
 
 const c = initContract();
 
@@ -38,6 +38,18 @@ export const userContract = c.router({
             500: Message
         },
         summary: 'get user data'
+    },
+    
+    devtreeUser: {
+        method: 'GET',
+        path: '/devtreeUser',
+        responses: {
+            200: devtreeUser,
+            401: Message,
+            404: Message,
+            500: Message
+        },
+        summary: 'get dev tree user'
     },
 
     updateUserData : {

@@ -51,6 +51,8 @@ export const UserDataSchemaRequest = z.object({
 
 export const userData = ZUserSchema.omit({password: true})
 
+export const devtreeUser = userData.omit({name: true, email: true})
+
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
     body: userData
