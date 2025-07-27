@@ -28,9 +28,14 @@ export default function AppLayout() {
             <header className="bg-white p-2 w-full shadow-2xl">
                 <div className="flex justify-between max-w-[90%] mx-auto">
                     <Logo />
-                    <button className="border-mid-purple/50 border px-2 py-1 rounded-sm hover:bg-mid-purple hover:text-white cursor-pointer">
-                        Log-Out
-                    </button>
+                    <div className="flex gap-4">
+                        <button className="bg-mid-purple px-2 py-1 rounded-sm text-white hover:scale-110 transition-all cursor-pointer">
+                            Visit profile
+                        </button>
+                        <button className="border-mid-purple/50 border px-2 py-1 rounded-sm hover:bg-mid-purple hover:text-white cursor-pointer">
+                            Log-Out
+                        </button>
+                    </div>
                 </div>
             </header>
             <section className="space-y-4 max-w-[90%] mx-auto">
