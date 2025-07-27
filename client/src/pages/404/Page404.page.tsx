@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Page404() {
   return (
+    <div className="h-screen w-screen">    
     <div className='w-full h-full flex items-center justify-center'>
       <div className="flex flex-col items-center justify-center space-y-5">
         <h1 className="text-mid-purple font-bold text-8xl">404</h1>
@@ -14,6 +15,7 @@ export default function Page404() {
             Return Home
         </Link>
       </div>
+    </div>
     </div>
   )
 }

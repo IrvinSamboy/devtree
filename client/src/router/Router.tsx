@@ -14,10 +14,12 @@ export default function Router() {
     <BrowserRouter >
       <Routes>
         <Route element={<VerifyTokenMiddleware />}>
+
+          <Route path="*" element={<Page404 />} />
+
           <Route
             element={<RootLayout />}
-          >
-            <Route path="*" element={<Page404 />} />
+          >    
             <Route
               path="/"
               element={<Loader />}
