@@ -42,7 +42,7 @@ export const userContract = c.router({
     
     devtreeUser: {
         method: 'GET',
-        path: '/devtreeUser',
+        path: '/devtreeUser/:userName',
         responses: {
             200: devtreeUser,
             401: Message,

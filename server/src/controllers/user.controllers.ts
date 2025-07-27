@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { userModel } from "../models/User";
-import { TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse, TSchemaGoodResponse, TSchemaBadResponse } from '../schemas/userSchema';
+import { TSigninSchemaResponse, TSigninSchemaRequest, TSignupSchemaRequest, TSignupSchemaResponse, TUserDataSchemaRequest, TUserDataSchemaResponse, TupdateUserDataSchemaRequest, TupdateUserDataSchemaResponse, TSchemaGoodResponse, TSchemaBadResponse, TDevtreeUserSchemaRequest, TDevtreeUserSchemaResponse } from '../schemas/userSchema';
 import { genToken } from '../utils/handleJWT';
 import { Response } from 'express';
 import { TsRestRequest } from '@ts-rest/express';
@@ -78,6 +78,44 @@ export const signin = async (ctx: { req: TSigninSchemaRequest, res: Response }):
         return {
             status: 401,
             body: { message: "unauthorized" }
+        }
+
+    }
+    catch (e) {
+        const errorMessage = (e as Error).message
+
+        return {
+            status: 500,
+            body: { message: errorMessage }
+        }
+    }
+}
+
+export const devtreeUser = async (ctx: {req: TDevtreeUserSchemaRequest , res: Response }): Promise<TDevtreeUserSchemaResponse | TSchemaBadResponse> => {
+    try {
+        const {userName} = ctx.req.params
+
+        if(!userName) return {
+            status: 404,
+            body: { message: "User not provided" }
+        }
+
+        const userData = await userModel.findOne({userName: userName})
+
+        if(!userData) return {
+            status: 404,
+            body: { message: "user not found" }
+        }
+
+        return {
+            status: 200,
+            body: {
+                userName: userData.userName,
+                description: userData.description,
+                coverImage: userData.coverImage,
+                image: userData.image,
+                socialMediaUrls: userData.socialMediaUrls
+            }
         }
 
     }

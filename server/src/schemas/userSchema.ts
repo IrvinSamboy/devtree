@@ -53,6 +53,11 @@ export const userData = ZUserSchema.omit({password: true})
 
 export const devtreeUser = userData.omit({name: true, email: true})
 
+export const devtreeUserSchemaResponse = z.object({
+    status: PositiveStatusSchema,
+    body: devtreeUser
+})
+
 export const userDataSchemaResponse = z.object({
     status: PositiveStatusSchema,
     body: userData
@@ -88,6 +93,9 @@ export type TSigninSchemaResponse = z.infer<typeof SigninSchemaResponse>
 
 export type TUserDataSchemaRequest = TsRestRequest<typeof userContract.userData>
 export type TUserDataSchemaResponse = z.infer<typeof userDataSchemaResponse>
+
+export type TDevtreeUserSchemaRequest = TsRestRequest<typeof userContract.devtreeUser>
+export type TDevtreeUserSchemaResponse = z.infer<typeof devtreeUserSchemaResponse>
 
 export type TupdateUserDataSchemaRequest = TsRestRequest<typeof userContract.updateUserData>
 export type TupdateUserDataSchemaResponse = z.infer<typeof updateUserDataSchemaResponse>
